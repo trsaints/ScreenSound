@@ -4,7 +4,7 @@ namespace ScreenSound.Menus;
 
 internal class MenuAvaliarBanda : Menu
 {
-    public override void Executar(Dictionary<string, Banda> bandasRegistradas)
+    public override void Executar(Dictionary<string, Artist> bandasRegistradas)
     {
         base.Executar(bandasRegistradas);
         ExibirTituloDaOpcao("Avaliar banda");
@@ -12,10 +12,10 @@ internal class MenuAvaliarBanda : Menu
         string nomeDaBanda = Console.ReadLine()!;
         if (bandasRegistradas.ContainsKey(nomeDaBanda))
         {
-            Banda banda = bandasRegistradas[nomeDaBanda];
+            Artist artist = bandasRegistradas[nomeDaBanda];
             Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
-            Avaliacao nota = Avaliacao.Parse(Console.ReadLine()!);
-            banda.AdicionarNota(nota);
+            Review nota = Review.Parse(Console.ReadLine()!);
+            artist.AdicionarNota(nota);
             Console.WriteLine($"\nA nota {nota.Nota} foi registrada com sucesso para a banda {nomeDaBanda}");
             Thread.Sleep(2000);
             Console.Clear();

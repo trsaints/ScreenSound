@@ -1,13 +1,13 @@
 ﻿using ScreenSound.Menus;
 using ScreenSound.Modelos;
 
-Banda ira = new Banda("Ira!");
-ira.AdicionarNota(new Avaliacao(10));
-ira.AdicionarNota(new Avaliacao(8));
-ira.AdicionarNota(new Avaliacao(6));
-Banda beatles = new("The Beatles");
+Artist ira = new Artist("Ira!");
+ira.AdicionarNota(new Review(10));
+ira.AdicionarNota(new Review(8));
+ira.AdicionarNota(new Review(6));
+Artist beatles = new("The Beatles");
 
-Dictionary<string, Banda> bandasRegistradas = new();
+Dictionary<string, Artist> bandasRegistradas = new();
 bandasRegistradas.Add(ira.Nome, ira);
 bandasRegistradas.Add(beatles.Nome, beatles);
 

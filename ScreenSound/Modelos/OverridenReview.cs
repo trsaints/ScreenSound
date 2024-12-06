@@ -1,24 +1,24 @@
 ﻿namespace ScreenSound.Modelos;
 
-internal class AvaliacaoComSobrescrita
+internal class OverridenReview
 {
-    public AvaliacaoComSobrescrita(int nota)
+    public OverridenReview(int nota)
     {
         Nota = nota;
     }
 
     public int Nota { get; }
 
-    public static AvaliacaoComSobrescrita Parse(string texto)
+    public static OverridenReview Parse(string texto)
     {
         int nota = int.Parse(texto);
-        return new AvaliacaoComSobrescrita(nota);
+        return new OverridenReview(nota);
     }
 
     public override bool Equals(object? obj)
     {
         if (obj == null) return false;
-        if (obj is not AvaliacaoComSobrescrita other) return false;
+        if (obj is not OverridenReview other) return false;
         return Nota.Equals(other.Nota);
     }
 

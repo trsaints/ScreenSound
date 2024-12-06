@@ -4,7 +4,7 @@ namespace ScreenSound.Menus;
 
 internal class MenuMostrarBandas : Menu
 {
-    public override void Executar(Dictionary<string, Banda> bandasRegistradas)
+    public override void Executar(Dictionary<string, Artist> bandasRegistradas)
     {
         base.Executar(bandasRegistradas);
         ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação");

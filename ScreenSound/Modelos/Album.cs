@@ -1,9 +1,9 @@
 ﻿namespace ScreenSound.Modelos;
 
-internal class Album : IAvaliavel
+internal class Album : IReviewable
 {
     private List<Musica> musicas = new List<Musica>();
-    private List<Avaliacao> notas = new();
+    private List<Review> notas = new();
 
     public Album(string nome)
     {
@@ -27,7 +27,7 @@ internal class Album : IAvaliavel
         musicas.Add(musica);
     }
 
-    public void AdicionarNota(Avaliacao nota)
+    public void AdicionarNota(Review nota)
     {
         notas.Add(nota);
     }
