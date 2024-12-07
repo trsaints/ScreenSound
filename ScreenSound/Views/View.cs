@@ -1,10 +1,14 @@
 using System.Text;
 using ScreenSound.Views.Interfaces;
 
+
+namespace ScreenSound.Views;
+
+
 public abstract class View : IView
 {
-	public readonly StringBuilder Layout = new();
-	public readonly string        Title;
+	protected readonly StringBuilder Layout = new();
+	protected readonly string        Title;
 
 	protected View(string title)
 	{
@@ -15,6 +19,20 @@ public abstract class View : IView
 	{
 		Console.Clear();
 		Console.Write(Layout.ToString());
+	}
+
+	public void DisplayLogo()
+	{
+		Console.WriteLine(@"
+
+░██████╗░█████╗░██████╗░███████╗███████╗███╗░░██╗  ░██████╗░█████╗░██╗░░░██╗███╗░░██╗██████╗░
+██╔════╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗░██║  ██╔════╝██╔══██╗██║░░░██║████╗░██║██╔══██╗
+╚█████╗░██║░░╚═╝██████╔╝█████╗░░█████╗░░██╔██╗██║  ╚█████╗░██║░░██║██║░░░██║██╔██╗██║██║░░██║
+░╚═══██╗██║░░██╗██╔══██╗██╔══╝░░██╔══╝░░██║╚████║  ░╚═══██╗██║░░██║██║░░░██║██║╚████║██║░░██║
+██████╔╝╚█████╔╝██║░░██║███████╗███████╗██║░╚███║  ██████╔╝╚█████╔╝╚██████╔╝██║░╚███║██████╔╝
+╚═════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚══════╝╚═╝░░╚══╝  ╚═════╝░░╚════╝░░╚═════╝░╚═╝░░╚══╝╚═════╝░
+");
+		Console.WriteLine("Welcome to Screen Sound 2.0!");
 	}
 
 	public virtual void BuildLayout()
