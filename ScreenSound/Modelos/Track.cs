@@ -1,13 +1,15 @@
 ﻿namespace ScreenSound.Modelos;
 
 
-public class Track
+public class Track : IReviewable
 {
     public Track(Artist artista, string nome)
     {
         Artista = artista;
         Nome = nome;
     }
+    
+    private List<Review> scores   = new();
 
     public string Nome { get; }
     public Artist Artista { get; }
@@ -29,10 +31,17 @@ public class Track
         }
     }
 
-    public double Media { get; }
+    public double Media
+    {
+        get
+        {
+            if (scores.Count == 0) return 0;
+            else return scores.Average(nota => nota.Score);
+        }
+    }
     
     public void AdicionarNota(Review nota)
     {
-        throw new NotImplementedException();
+        scores.Add(nota);
     }
 }
