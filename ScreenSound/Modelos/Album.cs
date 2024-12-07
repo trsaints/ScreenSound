@@ -1,4 +1,7 @@
-﻿namespace ScreenSound.Modelos;
+﻿using System.Text;
+
+
+namespace ScreenSound.Modelos;
 
 
 public class Album : IReviewable
@@ -39,13 +42,15 @@ public class Album : IReviewable
 	public void DisplayAlbumTracks()
 	{
 		Console.WriteLine($"Track list of \"{Name}\":\n");
+		StringBuilder trackContent = new();
 
 		foreach (var track in _tracks)
 		{
-			Console.WriteLine(
+			trackContent.AppendLine(
 				$"Track: \"{track.Name}\" \t\t Duration: {track.Duration}");
 		}
 
+		Console.WriteLine(trackContent.ToString());
 		Console.WriteLine(
 			$"\nFor listening to the whole album, it takes {AlbumDuration}s");
 	}
