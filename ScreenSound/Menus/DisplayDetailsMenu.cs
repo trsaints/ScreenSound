@@ -2,11 +2,11 @@
 
 namespace ScreenSound.Menus;
 
-internal class MenuExibirDetalhes : Menu
+internal class DisplayDetailsMenu : Menu
 {
-    public override void Executar(Dictionary<string, Artist> bandasRegistradas)
+    public override void Execute(Dictionary<string, Artist> bandasRegistradas)
     {
-        base.Executar(bandasRegistradas);
+        base.Execute(bandasRegistradas);
         ExibirTituloDaOpcao("Exibir detalhes da banda");
         Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
         string nomeDaBanda = Console.ReadLine()!;

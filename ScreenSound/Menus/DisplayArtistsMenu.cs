@@ -2,11 +2,11 @@
 
 namespace ScreenSound.Menus;
 
-internal class MenuMostrarBandas : Menu
+internal class DisplayArtistsMenu : Menu
 {
-    public override void Executar(Dictionary<string, Artist> bandasRegistradas)
+    public override void Execute(Dictionary<string, Artist> bandasRegistradas)
     {
-        base.Executar(bandasRegistradas);
+        base.Execute(bandasRegistradas);
         ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação");
 
         foreach (string banda in bandasRegistradas.Keys)

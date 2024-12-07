@@ -2,11 +2,11 @@
 
 namespace ScreenSound.Menus;
 
-internal class MenuRegistrarBanda : Menu
+internal class RegisterArtistMenu : Menu
 {
-    public override void Executar(Dictionary<string, Artist> bandasRegistradas)
+    public override void Execute(Dictionary<string, Artist> bandasRegistradas)
     {
-        base.Executar(bandasRegistradas);
+        base.Execute(bandasRegistradas);
         ExibirTituloDaOpcao("Registro das bandas");
         Console.Write("Digite o nome da banda que deseja registrar: ");
         string nomeDaBanda = Console.ReadLine()!;

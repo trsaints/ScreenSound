@@ -1,28 +1,28 @@
 ﻿using ScreenSound.Menus;
 using ScreenSound.Modelos;
 
-Artist ira = new Artist("Ira!");
+Artist ira = new("Ira!");
 ira.AddReview(new Review(10));
 ira.AddReview(new Review(8));
 ira.AddReview(new Review(6));
 Artist beatles = new("The Beatles");
 
-Dictionary<string, Artist> bandasRegistradas = new();
-bandasRegistradas.Add(ira.Nome, ira);
-bandasRegistradas.Add(beatles.Nome, beatles);
+Dictionary<string, Artist> registeredArtists = new();
+registeredArtists.Add(ira.Nome, ira);
+registeredArtists.Add(beatles.Nome, beatles);
 
-Dictionary<int, Menu> opcoes = new();
-opcoes.Add(1, new MenuRegistrarBanda());
-opcoes.Add(2, new MenuRegistrarAlbum());
-opcoes.Add(3, new MenuMostrarBandas());
-opcoes.Add(4, new MenuAvaliarBanda());
-opcoes.Add(5, new MenuAvaliarAlbum());
-opcoes.Add(6, new MenuExibirDetalhes());
-opcoes.Add(-1, new MenuSair());
+Dictionary<int, Menu> mainOptions = new();
+mainOptions.Add(1, new RegisterArtistMenu());
+mainOptions.Add(2, new RegisterAlbumMenu());
+mainOptions.Add(3, new DisplayArtistsMenu());
+mainOptions.Add(4, new ReviewArtistMenu());
+mainOptions.Add(5, new ReviewAlbumnMenu());
+mainOptions.Add(6, new DisplayDetailsMenu());
+mainOptions.Add(-1, new ExitMenu());
 
-void ExibirLogo()
+void DisplayLogo()
 {
-    Console.WriteLine(@"
+	Console.WriteLine(@"
 
 ░██████╗░█████╗░██████╗░███████╗███████╗███╗░░██╗  ░██████╗░█████╗░██╗░░░██╗███╗░░██╗██████╗░
 ██╔════╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗░██║  ██╔════╝██╔══██╗██║░░░██║████╗░██║██╔══██╗
@@ -31,34 +31,39 @@ void ExibirLogo()
 ██████╔╝╚█████╔╝██║░░██║███████╗███████╗██║░╚███║  ██████╔╝╚█████╔╝╚██████╔╝██║░╚███║██████╔╝
 ╚═════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚══════╝╚═╝░░╚══╝  ╚═════╝░░╚════╝░░╚═════╝░╚═╝░░╚══╝╚═════╝░
 ");
-    Console.WriteLine("Boas vindas ao Screen Sound 2.0!");
+	Console.WriteLine("Welcome to Screen Sound 2.0!");
 }
 
-void ExibirOpcoesDoMenu()
+void DisplayOptions()
 {
-    ExibirLogo();
-    Console.WriteLine("\nDigite 1 para registrar uma banda");
-    Console.WriteLine("Digite 2 para registrar o álbum de uma banda");
-    Console.WriteLine("Digite 3 para mostrar todas as bandas");
-    Console.WriteLine("Digite 4 para avaliar uma banda");
-    Console.WriteLine("Digite 5 para avaliar um álbum");
-    Console.WriteLine("Digite 6 para exibir os detalhes de uma banda");
-    Console.WriteLine("Digite -1 para sair");
+	while (true)
+	{
+		DisplayLogo();
+		Console.WriteLine("\n[1] Register an Artist");
+		Console.WriteLine("[2] Register an Album");
+		Console.WriteLine("[3] Display all artists");
+		Console.WriteLine("[4] Review an Artist");
+		Console.WriteLine("[5] Review an Album");
+		Console.WriteLine("[6] View Artist details");
+		Console.WriteLine("[-1] Exit");
 
-    Console.Write("\nDigite a sua opção: ");
-    string opcaoEscolhida = Console.ReadLine()!;
-    int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+		Console.Write("\nYour option (digits only): ");
 
-    if (opcoes.ContainsKey(opcaoEscolhidaNumerica))
-    {
-        Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
-        menuASerExibido.Executar(bandasRegistradas);
-        if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
-    } 
-    else
-    {
-        Console.WriteLine("Opção inválida");
-    }
+		var chosenOption = Console.ReadLine()!;
+		var parsedOption = int.Parse(chosenOption);
+
+		if (mainOptions.ContainsKey(parsedOption))
+		{
+			var chosenMenu = mainOptions[parsedOption];
+			chosenMenu.Execute(registeredArtists);
+
+			if (parsedOption > 0) continue;
+		}
+
+		if (parsedOption != -1) Console.WriteLine("Invalid Option. Exiting...");
+
+		break;
+	}
 }
 
-ExibirOpcoesDoMenu();
+DisplayOptions();
