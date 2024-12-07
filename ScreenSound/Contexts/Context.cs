@@ -7,12 +7,14 @@ using ScreenSound.Views;
 namespace ScreenSound.Contexts;
 
 
-public abstract class Context<T> : IContext<T> where T : Entity, IReviewable
+public abstract class Context<T> : IContext<T> where T : Entity
 {
-	protected Context(string[] options, IRepository<T> repository)
+	protected Context(IRepository<T> repository)
 	{
 		Repository = repository;
-		Menu       = new MenuView(Title, "Welcome", options);
+
+		var menuOptions = GetType().GetMethods().Select(m => m.Name);
+		Menu = new MenuView(Title, "Welcome", menuOptions);
 	}
 
 	protected readonly IRepository<T> Repository;

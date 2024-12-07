@@ -4,10 +4,14 @@ using ScreenSound.Views;
 namespace ScreenSound.Contexts.Interfaces;
 
 
-public interface IContext<T>
+public interface IContext
 {
 	public void Run();
-	
+
+}
+
+public interface IContext<T> : IContext
+{
 	public void Register(T data);
 
 	public void ViewAll();

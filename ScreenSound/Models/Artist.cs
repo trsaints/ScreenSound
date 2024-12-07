@@ -4,7 +4,7 @@
 namespace ScreenSound.Models;
 
 
-public class Artist : Entity, IReviewable
+public class Artist : Entity
 {
 	private readonly List<Review> _reviews = new();
 
@@ -15,7 +15,7 @@ public class Artist : Entity, IReviewable
 
 	public string Name { get; }
 
-	public double AverageScore
+	public override double AverageScore
 	{
 		get
 		{
@@ -32,7 +32,7 @@ public class Artist : Entity, IReviewable
 		Albums.Add(album);
 	}
 
-	public void AddReview(Review review)
+	public override void AddReview(Review review)
 	{
 		_reviews.Add(review);
 	}

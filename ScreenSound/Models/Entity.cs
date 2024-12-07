@@ -1,7 +1,7 @@
 namespace ScreenSound.Models;
 
 
-public abstract class Entity
+public abstract class Entity : IReviewable
 {
 	protected Entity()
 	{
@@ -14,5 +14,9 @@ public abstract class Entity
 
 	private readonly Random _generator = new();
 
-	public static ulong NextId;
+	public static   ulong  NextId;
+	
+	public abstract double AverageScore { get; }
+	
+	public abstract void AddReview(Review review);
 }

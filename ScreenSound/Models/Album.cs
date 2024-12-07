@@ -4,7 +4,7 @@
 namespace ScreenSound.Models;
 
 
-public class Album : Entity, IReviewable
+public class Album : Entity
 {
 	public Album(string name)
 	{
@@ -17,7 +17,7 @@ public class Album : Entity, IReviewable
 	public string Name          { get; }
 	public long   AlbumDuration => _tracks.Sum(track => track.Duration);
 
-	public double AverageScore
+	public override double AverageScore
 	{
 		get
 		{
@@ -34,7 +34,7 @@ public class Album : Entity, IReviewable
 		_tracks.Add(track);
 	}
 
-	public void AddReview(Review review)
+	public override void AddReview(Review review)
 	{
 		_scores.Add(review);
 	}

@@ -98,5 +98,8 @@ public abstract class Repository<T> : IRepository<T> where T : Entity, IReviewab
 		return true;
 	}
 
-	public abstract bool Exists(T entity);
+	public virtual bool Exists(T entity)
+	{
+		return Dataset.Contains(entity);
+	}
 }

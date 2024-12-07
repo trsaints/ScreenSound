@@ -4,7 +4,7 @@
 namespace ScreenSound.Models;
 
 
-public class Track : Entity, IReviewable
+public class Track : Entity
 {
 	public Track(Artist artist, string name)
 	{
@@ -33,7 +33,7 @@ public class Track : Entity, IReviewable
 		detailsView.Display();
 	}
 
-	public double AverageScore
+	public override double AverageScore
 	{
 		get
 		{
@@ -43,7 +43,7 @@ public class Track : Entity, IReviewable
 		}
 	}
 
-	public void AddReview(Review review)
+	public override void AddReview(Review review)
 	{
 		_scores.Add(review);
 	}
