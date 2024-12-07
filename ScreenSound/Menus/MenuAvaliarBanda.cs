@@ -15,7 +15,7 @@ internal class MenuAvaliarBanda : Menu
             Artist artist = bandasRegistradas[nomeDaBanda];
             Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
             Review nota = Review.Parse(Console.ReadLine()!);
-            artist.AdicionarNota(nota);
+            artist.AddReview(nota);
             Console.WriteLine($"\nA nota {nota.Score} foi registrada com sucesso para a banda {nomeDaBanda}");
             Thread.Sleep(2000);
             Console.Clear();

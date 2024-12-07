@@ -1,44 +1,52 @@
 ﻿namespace ScreenSound.Modelos;
 
+
 public class Album : IReviewable
 {
-    private List<Track> musicas = new List<Track>();
-    private List<Review> notas = new();
+	public Album(string name)
+	{
+		Name = name;
+	}
 
-    public Album(string nome)
-    {
-        Nome = nome;
-    }
+	private readonly List<Track>  _tracks = new();
+	private readonly List<Review> _scores = new();
 
-    public string Nome { get; }
-    public int DuracaoTotal => musicas.Sum(m => m.Duracao);
-    public double Media
-    {
-        get
-        {
-            if (notas.Count == 0) return 0;
-            else return notas.Average(nota => nota.Score);
-        }
-    }
-    public List<Track> Musicas => musicas;
+	public string Name          { get; }
+	public long   AlbumDuration => _tracks.Sum(track => track.Duration);
 
-    public void AdicionarMusica(Track track)
-    {
-        musicas.Add(track);
-    }
+	public double AverageScore
+	{
+		get
+		{
+			if (_scores.Count == 0) return 0;
 
-    public void AdicionarNota(Review nota)
-    {
-        notas.Add(nota);
-    }
+			return _scores.Average(review => review.Score);
+		}
+	}
 
-    public void ExibirMusicasDoAlbum()
-    {
-        Console.WriteLine($"Lista de músicas do álbum {Nome}:\n");
-        foreach (var musica in musicas)
-        {
-            Console.WriteLine($"Música: {musica.Nome}");
-        }
-        Console.WriteLine($"\nPara ouvir este álbum inteiro você precisa de {DuracaoTotal}");
-    }
+	public List<Track> Tracks => _tracks;
+
+	public void AddTrack(Track track)
+	{
+		_tracks.Add(track);
+	}
+
+	public void AddReview(Review review)
+	{
+		_scores.Add(review);
+	}
+
+	public void DisplayAlbumTracks()
+	{
+		Console.WriteLine($"Track list of \"{Name}\":\n");
+
+		foreach (var track in _tracks)
+		{
+			Console.WriteLine(
+				$"Track: \"{track.Name}\" \t\t Duration: {track.Duration}");
+		}
+
+		Console.WriteLine(
+			$"\nFor listening to the whole album, it takes {AlbumDuration}s");
+	}
 }

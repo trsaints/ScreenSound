@@ -2,6 +2,6 @@
 
 public interface IReviewable
 {
-    double Media { get; }
-    void AdicionarNota(Review nota);
+    double AverageScore { get; }
+    void AddReview(Review review);
 }

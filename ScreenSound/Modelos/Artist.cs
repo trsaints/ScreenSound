@@ -13,7 +13,7 @@ public class Artist : IReviewable
 
 	public string Nome { get; }
 
-	public double Media
+	public double AverageScore
 	{
 		get
 		{
@@ -29,9 +29,9 @@ public class Artist : IReviewable
 		albuns.Add(album);
 	}
 
-	public void AdicionarNota(Review nota)
+	public void AddReview(Review review)
 	{
-		notas.Add(nota);
+		notas.Add(review);
 	}
 
 	public void ExibirDiscografia()
@@ -40,7 +40,7 @@ public class Artist : IReviewable
 
 		foreach (Album album in albuns)
 		{
-			Console.WriteLine($"Álbum: {album.Nome} ({album.DuracaoTotal})");
+			Console.WriteLine($"Álbum: {album.Name} ({album.AlbumDuration})");
 		}
 	}
 }

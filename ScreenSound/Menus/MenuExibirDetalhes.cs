@@ -13,11 +13,11 @@ internal class MenuExibirDetalhes : Menu
         if (bandasRegistradas.ContainsKey(nomeDaBanda))
         {
             Artist artist = bandasRegistradas[nomeDaBanda];
-            Console.WriteLine($"\nA média da banda {nomeDaBanda} é {artist.Media}.");
+            Console.WriteLine($"\nA média da banda {nomeDaBanda} é {artist.AverageScore}.");
             Console.WriteLine("\nDiscografia:");
             foreach(Album album in artist.Albuns)
             {
-                Console.WriteLine($"{album.Nome} -> {album.Media}");
+                Console.WriteLine($"{album.Name} -> {album.AverageScore}");
             }
             Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
             Console.ReadKey();

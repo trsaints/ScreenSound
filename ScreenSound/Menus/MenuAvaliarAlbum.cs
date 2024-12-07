@@ -18,12 +18,12 @@ internal class MenuAvaliarAlbum : Menu
             Console.Write("Agora digite o título do álbum: ");
             string tituloAlbum = Console.ReadLine()!;
 
-            if (artist.Albuns.Any(a => a.Nome.Equals(tituloAlbum)))
+            if (artist.Albuns.Any(a => a.Name.Equals(tituloAlbum)))
             {
-                Album album = artist.Albuns.First(a => a.Nome.Equals(tituloAlbum));
+                Album album = artist.Albuns.First(a => a.Name.Equals(tituloAlbum));
                 Console.Write($"Qual a nota que o álbum {tituloAlbum} merece: ");
                 Review nota = Review.Parse(Console.ReadLine()!);
-                album.AdicionarNota(nota);
+                album.AddReview(nota);
                 Console.WriteLine($"\nA nota {nota.Score} foi registrada com sucesso para o álbum {tituloAlbum}");
                 Thread.Sleep(2000);
                 Console.Clear();

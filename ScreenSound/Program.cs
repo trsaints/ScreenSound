@@ -2,9 +2,9 @@
 using ScreenSound.Modelos;
 
 Artist ira = new Artist("Ira!");
-ira.AdicionarNota(new Review(10));
-ira.AdicionarNota(new Review(8));
-ira.AdicionarNota(new Review(6));
+ira.AddReview(new Review(10));
+ira.AddReview(new Review(8));
+ira.AddReview(new Review(6));
 Artist beatles = new("The Beatles");
 
 Dictionary<string, Artist> bandasRegistradas = new();

@@ -3,45 +3,45 @@
 
 public class Track : IReviewable
 {
-    public Track(Artist artista, string nome)
-    {
-        Artista = artista;
-        Nome = nome;
-    }
-    
-    private List<Review> scores   = new();
+	public Track(Artist artist, string name)
+	{
+		Artist = artist;
+		Name   = name;
+	}
 
-    public string Nome { get; }
-    public Artist Artista { get; }
-    public int Duracao { get; set; }
-    public bool Disponivel { get; set; }
-    public string DescricaoResumida => $"A música {Nome} pertence à banda {Artista}";
+	private readonly List<Review> _scores = new();
 
-    public void ExibirFichaTecnica()
-    {
-        Console.WriteLine($"Nome: {Nome}");
-        Console.WriteLine($"Artista: {Artista.Nome}");
-        Console.WriteLine($"Duração: {Duracao}");
-        if (Disponivel)
-        {
-            Console.WriteLine("Disponível no plano.");
-        } else
-        {
-            Console.WriteLine("Adquira o plano Plus+");
-        }
-    }
+	public string Name      { get; }
+	public Artist Artist    { get; }
+	public uint   Duration  { get; set; }
+	public bool   Available { get; set; }
 
-    public double Media
-    {
-        get
-        {
-            if (scores.Count == 0) return 0;
-            else return scores.Average(nota => nota.Score);
-        }
-    }
-    
-    public void AdicionarNota(Review nota)
-    {
-        scores.Add(nota);
-    }
+	public string ShortDescription =>
+		$"A this track, \"{Name}\", belongs to \"{Artist}\"";
+
+	public void DisplayResume()
+	{
+		Console.WriteLine($"Nome: {Name}");
+		Console.WriteLine($"Artista: {Artist.Nome}");
+		Console.WriteLine($"Duração: {Duration}");
+
+		Console.WriteLine(Available
+			                  ? "Disponível no plano."
+			                  : "Adquira o plano Plus+");
+	}
+
+	public double AverageScore
+	{
+		get
+		{
+			if (_scores.Count == 0) return 0;
+
+			return _scores.Average(review => review.Score);
+		}
+	}
+
+	public void AddReview(Review review)
+	{
+		_scores.Add(review);
+	}
 }
