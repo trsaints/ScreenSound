@@ -1,5 +1,5 @@
 ﻿using ScreenSound.Menus;
-using ScreenSound.Modelos;
+using ScreenSound.Models;
 
 Artist ira = new("Ira!");
 ira.AddReview(new Review(10));
@@ -8,8 +8,8 @@ ira.AddReview(new Review(6));
 Artist beatles = new("The Beatles");
 
 Dictionary<string, Artist> registeredArtists = new();
-registeredArtists.Add(ira.Nome, ira);
-registeredArtists.Add(beatles.Nome, beatles);
+registeredArtists.Add(ira.Name, ira);
+registeredArtists.Add(beatles.Name, beatles);
 
 Dictionary<int, Menu> mainOptions = new();
 mainOptions.Add(1, new RegisterArtistMenu());

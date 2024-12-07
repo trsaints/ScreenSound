@@ -1,4 +1,4 @@
-using ScreenSound.Modelos;
+using ScreenSound.Models;
 
 
 namespace ScreenSound.Services.Interfaces;

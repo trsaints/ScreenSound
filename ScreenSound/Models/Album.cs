@@ -1,7 +1,7 @@
 ﻿using System.Text;
 
 
-namespace ScreenSound.Modelos;
+namespace ScreenSound.Models;
 
 
 public class Album : IReviewable

@@ -1,34 +1,40 @@
-﻿using ScreenSound.Modelos;
+﻿using ScreenSound.Models;
+
 
 namespace ScreenSound.Menus;
 
+
 internal class DisplayDetailsMenu : Menu
 {
-    public override void Execute(Dictionary<string, Artist> bandasRegistradas)
-    {
-        base.Execute(bandasRegistradas);
-        ExibirTituloDaOpcao("Exibir detalhes da banda");
-        Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
-        string nomeDaBanda = Console.ReadLine()!;
-        if (bandasRegistradas.ContainsKey(nomeDaBanda))
-        {
-            Artist artist = bandasRegistradas[nomeDaBanda];
-            Console.WriteLine($"\nA média da banda {nomeDaBanda} é {artist.AverageScore}.");
-            Console.WriteLine("\nDiscografia:");
-            foreach(Album album in artist.Albuns)
-            {
-                Console.WriteLine($"{album.Name} -> {album.AverageScore}");
-            }
-            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
-            Console.ReadKey();
-            Console.Clear();
-        }
-        else
-        {
-            Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
-            Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-            Console.ReadKey();
-            Console.Clear();
-        }
-    }
+	public override void Execute(Dictionary<string, Artist> registeredArtists)
+	{
+		base.Execute(registeredArtists);
+		DisplayOptionTitle("Display Artist Details");
+		Console.Write("Write in Artist's name: ");
+		var artistName = Console.ReadLine()!;
+
+		if (registeredArtists.ContainsKey(artistName))
+		{
+			var artist = registeredArtists[artistName];
+
+			Console.WriteLine(
+				$"\nArtist \"{artistName}\"'s score is {artist.AverageScore}.");
+			Console.WriteLine("\nDiscography:");
+
+			foreach (var album in artist.Albums)
+			{
+				Console.WriteLine($"{album.Name} \t->\t {album.AverageScore}");
+			}
+		}
+		else
+		{
+			Console.WriteLine(
+				$"\nCouldn't find \"{artistName}\" in the database.");
+		}
+
+		Console.WriteLine(
+			"\nPress any key to return.");
+		Console.ReadKey();
+		Console.Clear();
+	}
 }

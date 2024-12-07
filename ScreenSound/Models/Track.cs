@@ -1,4 +1,4 @@
-﻿namespace ScreenSound.Modelos;
+﻿namespace ScreenSound.Models;
 
 
 public class Track : IReviewable
@@ -22,7 +22,7 @@ public class Track : IReviewable
 	public void DisplayResume()
 	{
 		Console.WriteLine($"Nome: {Name}");
-		Console.WriteLine($"Artista: {Artist.Nome}");
+		Console.WriteLine($"Artista: {Artist.Name}");
 		Console.WriteLine($"Duração: {Duration}");
 
 		Console.WriteLine(Available

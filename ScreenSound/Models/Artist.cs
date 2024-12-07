@@ -1,46 +1,54 @@
-﻿namespace ScreenSound.Modelos;
+﻿using System.Text;
+
+
+namespace ScreenSound.Models;
 
 
 public class Artist : IReviewable
 {
-	private List<Album>  albuns = new List<Album>();
-	private List<Review> notas  = new List<Review>();
+	private readonly List<Review> _reviews = new();
 
-	public Artist(string nome)
+	public Artist(string name)
 	{
-		Nome = nome;
+		Name = name;
 	}
 
-	public string Nome { get; }
+	public string Name { get; }
 
 	public double AverageScore
 	{
 		get
 		{
-			if (notas.Count == 0) return 0;
-			else return notas.Average(a => a.Score);
+			if (_reviews.Count == 0) return 0;
+
+			return _reviews.Average(a => a.Score);
 		}
 	}
 
-	public List<Album> Albuns => albuns;
+	public List<Album> Albums { get; } = new();
 
-	public void AdicionarAlbum(Album album)
+	public void AddAlbum(Album album)
 	{
-		albuns.Add(album);
+		Albums.Add(album);
 	}
 
 	public void AddReview(Review review)
 	{
-		notas.Add(review);
+		_reviews.Add(review);
 	}
 
-	public void ExibirDiscografia()
+	public void DisplayDiscography()
 	{
-		Console.WriteLine($"Discografia da banda {Nome}");
+		Console.WriteLine($"{Name}'s Discography");
 
-		foreach (Album album in albuns)
+		StringBuilder discography = new();
+
+		foreach (var album in Albums)
 		{
-			Console.WriteLine($"Álbum: {album.Name} ({album.AlbumDuration})");
+			discography.AppendLine(
+				$"Album: {album.Name} \t-\t({album.AlbumDuration})");
 		}
+
+		Console.WriteLine(discography.ToString());
 	}
 }

@@ -1,31 +1,41 @@
-﻿using ScreenSound.Modelos;
+﻿using ScreenSound.Models;
+
 
 namespace ScreenSound.Menus;
 
+
 internal class RegisterAlbumMenu : Menu
 {
-    public override void Execute(Dictionary<string, Artist> bandasRegistradas)
-    {
-        base.Execute(bandasRegistradas);
-        ExibirTituloDaOpcao("Registro de álbuns");
-        Console.Write("Digite a banda cujo álbum deseja registrar: ");
-        string nomeDaBanda = Console.ReadLine()!;
-        if (bandasRegistradas.ContainsKey(nomeDaBanda))
-        {
-            Console.Write("Agora digite o título do álbum: ");
-            string tituloAlbum = Console.ReadLine()!;
-            Artist artist = bandasRegistradas[nomeDaBanda];
-            artist.AdicionarAlbum(new Album(tituloAlbum));
-            Console.WriteLine($"O álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso!");
-            Thread.Sleep(4000);
-            Console.Clear();
-        }
-        else
-        {
-            Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
-            Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-            Console.ReadKey();
-            Console.Clear();
-        }
-    }
+	public override void Execute(Dictionary<string, Artist> registeredArtists)
+	{
+		base.Execute(registeredArtists);
+		DisplayOptionTitle("Album Registration");
+
+		Console.Write("Write in Artist's name: ");
+
+		var artistName = Console.ReadLine()!;
+
+		if (registeredArtists.ContainsKey(artistName))
+		{
+			Console.Write("Now, the Album name: ");
+
+			var albumTitle = Console.ReadLine()!;
+			var artist      = registeredArtists[artistName];
+			
+			artist.AddAlbum(new Album(albumTitle));
+			
+			Console.WriteLine(
+				$"{albumTitle}, by {artistName}, added successfully!");
+
+			Thread.Sleep(4000);
+		}
+		else
+		{
+			Console.WriteLine($"\nArtist {artistName} not found!");
+			Console.WriteLine("Press any key to return.");
+			Console.ReadKey();
+		}
+
+		Console.Clear();
+	}
 }

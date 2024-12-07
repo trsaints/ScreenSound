@@ -1,19 +1,25 @@
-﻿using ScreenSound.Modelos;
+﻿using ScreenSound.Models;
+
 
 namespace ScreenSound.Menus;
 
+
 internal class RegisterArtistMenu : Menu
 {
-    public override void Execute(Dictionary<string, Artist> bandasRegistradas)
-    {
-        base.Execute(bandasRegistradas);
-        ExibirTituloDaOpcao("Registro das bandas");
-        Console.Write("Digite o nome da banda que deseja registrar: ");
-        string nomeDaBanda = Console.ReadLine()!;
-        Artist artist = new Artist(nomeDaBanda);
-        bandasRegistradas.Add(nomeDaBanda, artist);
-        Console.WriteLine($"A banda {nomeDaBanda} foi registrada com sucesso!");
-        Thread.Sleep(4000);
-        Console.Clear();
-    }
+	public override void Execute(Dictionary<string, Artist> registeredArtists)
+	{
+		base.Execute(registeredArtists);
+		DisplayOptionTitle("Artist Registration");
+
+		Console.Write("Write in Artist's name: ");
+
+		var artistName = Console.ReadLine()!;
+		var artist     = new Artist(artistName);
+
+		registeredArtists.Add(artistName, artist);
+		Console.WriteLine(
+			$"Artist \"{artistName}\" registration was successful!");
+		Thread.Sleep(4000);
+		Console.Clear();
+	}
 }

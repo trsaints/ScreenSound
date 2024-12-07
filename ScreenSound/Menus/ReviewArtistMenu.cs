@@ -1,31 +1,40 @@
-﻿using ScreenSound.Modelos;
+﻿using ScreenSound.Models;
+
 
 namespace ScreenSound.Menus;
 
+
 internal class ReviewArtistMenu : Menu
 {
-    public override void Execute(Dictionary<string, Artist> bandasRegistradas)
-    {
-        base.Execute(bandasRegistradas);
-        ExibirTituloDaOpcao("Avaliar banda");
-        Console.Write("Digite o nome da banda que deseja avaliar: ");
-        string nomeDaBanda = Console.ReadLine()!;
-        if (bandasRegistradas.ContainsKey(nomeDaBanda))
-        {
-            Artist artist = bandasRegistradas[nomeDaBanda];
-            Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
-            Review nota = Review.Parse(Console.ReadLine()!);
-            artist.AddReview(nota);
-            Console.WriteLine($"\nA nota {nota.Score} foi registrada com sucesso para a banda {nomeDaBanda}");
-            Thread.Sleep(2000);
-            Console.Clear();
-        }
-        else
-        {
-            Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
-            Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-            Console.ReadKey();
-            Console.Clear();
-        }
-    }
+	public override void Execute(Dictionary<string, Artist> registeredArtists)
+	{
+		base.Execute(registeredArtists);
+
+		DisplayOptionTitle("Review Artist");
+		Console.Write("Write in Artist's name: ");
+
+		var artistName = Console.ReadLine()!;
+
+		if (registeredArtists.ContainsKey(artistName))
+		{
+			var artist = registeredArtists[artistName];
+			Console.Write($"How much, out of 10, \"{artistName}\" deserves?");
+
+			var review = Review.Parse(Console.ReadLine()!);
+			artist.AddReview(review);
+
+			Console.WriteLine(
+				$"\n{review.Score} score was added to \"{artistName}\"'s reviews!");
+			Thread.Sleep(2000);
+		}
+		else
+		{
+			Console.WriteLine(
+				$"\nCouldn't find \"{artistName}\" in the database.");
+			Console.WriteLine("Press any key to return.");
+			Console.ReadKey();
+		}
+
+		Console.Clear();
+	}
 }
