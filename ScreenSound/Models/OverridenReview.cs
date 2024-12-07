@@ -3,33 +3,32 @@
 
 internal class OverridenReview
 {
-    public OverridenReview(int nota)
+    public OverridenReview(int score)
     {
-        Nota = nota;
+        Score = score;
     }
 
-    public int Nota { get; }
+    public int Score { get; }
 
     public static OverridenReview Parse(string texto)
     {
-        int nota = int.Parse(texto);
+        var nota = int.Parse(texto);
+        
         return new OverridenReview(nota);
     }
 
     public override bool Equals(object? obj)
     {
-        if (obj == null) return false;
-        if (obj is not OverridenReview other) return false;
-        return Nota.Equals(other.Nota);
+        return obj is OverridenReview other && Score.Equals(other.Score);
     }
 
     public override int GetHashCode()
     {
-        return Nota.GetHashCode();
+        return Score.GetHashCode();
     }
 
     public override string ToString()
     {
-        return Nota.ToString();
+        return Score.ToString();
     }
 }

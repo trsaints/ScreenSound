@@ -1,4 +1,7 @@
-﻿namespace ScreenSound.Models;
+﻿using ScreenSound.Views;
+
+
+namespace ScreenSound.Models;
 
 
 public class Track : Entity, IReviewable
@@ -21,13 +24,13 @@ public class Track : Entity, IReviewable
 
 	public void DisplayResume()
 	{
-		Console.WriteLine($"Nome: {Name}");
-		Console.WriteLine($"Artista: {Artist.Name}");
-		Console.WriteLine($"Duração: {Duration}");
+		var trackProperties = GetType().GetProperties();
+		var trackInfo = trackProperties.ToDictionary(info => info.Name,
+			info => info.GetValue(this).ToString()!);
 
-		Console.WriteLine(Available
-			                  ? "Disponível no plano."
-			                  : "Adquira o plano Plus+");
+		DetailsView detailsView = new("Track Details", trackInfo);
+		detailsView.BuildLayout();
+		detailsView.Display();
 	}
 
 	public double AverageScore
