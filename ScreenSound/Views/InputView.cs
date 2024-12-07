@@ -1,12 +1,11 @@
 namespace ScreenSound.Views;
 
 
-using ScreenSound.Views.Interfaces;
+using Interfaces;
 
 public sealed class InputView : View, IInputView
 {
-	public readonly Dictionary<string, string> UserEntries
-		= new();
+	public readonly Dictionary<string, string> UserEntries = new();
 
 	private string? _messagePrompt;
 

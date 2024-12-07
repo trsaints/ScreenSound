@@ -1,4 +1,3 @@
-using System.Text;
 using ScreenSound.Views.Interfaces;
 
 
@@ -9,11 +8,10 @@ public class MenuView : View, IMenuView
 {
 	private readonly string   _header;
 	private readonly string[] _options;
-	public           int      ChosenOption { get; private set; }
 
-	public MenuView(string title,
-	                string header,
-	                string[] options) : base(title)
+	public int ChosenOption { get; private set; }
+
+	public MenuView(string title, string header, string[] options) : base(title)
 	{
 		_header  = header;
 		_options = options;
