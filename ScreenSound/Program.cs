@@ -2,7 +2,7 @@
 using ScreenSound.Models;
 using ScreenSound.Views;
 
-Dictionary<int, IContext<IReviewable>> mainOptions       = new();
+Dictionary<int, IContext<IReviewable>> mainOptions = new();
 
 Init();
 
@@ -12,14 +12,10 @@ void Init()
 {
 	while (true)
 	{
-		string[] options =
-		{
-			"Register an Artist", "Register an Album", "Display all artists",
-			"Review an Artist", "Review an Album", "View Artist details", "Exit"
-		};
+		string[] options = { "Artists", "Albums", "Tracks", "Exit" };
 
 		MenuView mainMenu = new("Main Menu",
-		                        "Welcome to ScreenSound! What would you like to do? ",
+		                        "Welcome to ScreenSound! What's your context? ",
 		                        options);
 
 		mainMenu.BuildLayout();

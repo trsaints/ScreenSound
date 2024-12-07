@@ -29,7 +29,7 @@ public class MenuView : View, IMenuView
 		Layout.AppendLine();
 		Layout.Append("Your choice (numbers only): ");
 	}
-
+	
 	public void ReadEntry()
 	{
 		Display();
