@@ -1,7 +1,7 @@
 ﻿namespace ScreenSound.Models;
 
 
-public class Track : IReviewable
+public class Track : Entity, IReviewable
 {
 	public Track(Artist artist, string name)
 	{

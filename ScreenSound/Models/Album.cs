@@ -4,7 +4,7 @@
 namespace ScreenSound.Models;
 
 
-public class Album : IReviewable
+public class Album : Entity, IReviewable
 {
 	public Album(string name)
 	{

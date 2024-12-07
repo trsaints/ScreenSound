@@ -4,7 +4,7 @@
 namespace ScreenSound.Models;
 
 
-public class Artist : IReviewable
+public class Artist : Entity, IReviewable
 {
 	private readonly List<Review> _reviews = new();
 
