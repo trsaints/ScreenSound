@@ -1,8 +1,9 @@
 ﻿namespace ScreenSound.Modelos;
 
-internal class Musica
+
+public class Track
 {
-    public Musica(Artist artista, string nome)
+    public Track(Artist artista, string nome)
     {
         Artista = artista;
         Nome = nome;
@@ -26,5 +27,12 @@ internal class Musica
         {
             Console.WriteLine("Adquira o plano Plus+");
         }
+    }
+
+    public double Media { get; }
+    
+    public void AdicionarNota(Review nota)
+    {
+        throw new NotImplementedException();
     }
 }

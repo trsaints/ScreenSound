@@ -1,7 +1,7 @@
 ﻿namespace ScreenSound.Modelos;
 
 
-internal class Artist : IReviewable
+public class Artist : IReviewable
 {
 	private List<Album>  albuns = new List<Album>();
 	private List<Review> notas  = new List<Review>();
@@ -18,7 +18,7 @@ internal class Artist : IReviewable
 		get
 		{
 			if (notas.Count == 0) return 0;
-			else return notas.Average(a => a.Nota);
+			else return notas.Average(a => a.Score);
 		}
 	}
 

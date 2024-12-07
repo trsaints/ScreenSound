@@ -24,7 +24,7 @@ internal class MenuAvaliarAlbum : Menu
                 Console.Write($"Qual a nota que o álbum {tituloAlbum} merece: ");
                 Review nota = Review.Parse(Console.ReadLine()!);
                 album.AdicionarNota(nota);
-                Console.WriteLine($"\nA nota {nota.Nota} foi registrada com sucesso para o álbum {tituloAlbum}");
+                Console.WriteLine($"\nA nota {nota.Score} foi registrada com sucesso para o álbum {tituloAlbum}");
                 Thread.Sleep(2000);
                 Console.Clear();
             } 

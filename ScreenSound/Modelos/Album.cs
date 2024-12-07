@@ -1,8 +1,8 @@
 ﻿namespace ScreenSound.Modelos;
 
-internal class Album : IReviewable
+public class Album : IReviewable
 {
-    private List<Musica> musicas = new List<Musica>();
+    private List<Track> musicas = new List<Track>();
     private List<Review> notas = new();
 
     public Album(string nome)
@@ -17,14 +17,14 @@ internal class Album : IReviewable
         get
         {
             if (notas.Count == 0) return 0;
-            else return notas.Average(nota => nota.Nota);
+            else return notas.Average(nota => nota.Score);
         }
     }
-    public List<Musica> Musicas => musicas;
+    public List<Track> Musicas => musicas;
 
-    public void AdicionarMusica(Musica musica)
+    public void AdicionarMusica(Track track)
     {
-        musicas.Add(musica);
+        musicas.Add(track);
     }
 
     public void AdicionarNota(Review nota)

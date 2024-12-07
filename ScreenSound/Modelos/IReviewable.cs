@@ -1,6 +1,6 @@
 ﻿namespace ScreenSound.Modelos;
 
-internal interface IReviewable
+public interface IReviewable
 {
     double Media { get; }
     void AdicionarNota(Review nota);

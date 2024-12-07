@@ -1,17 +1,17 @@
 ﻿namespace ScreenSound.Modelos;
 
-internal class Review
+public class Review
 {
-    public Review(int nota)
+    public Review(int score)
     {
-        Nota = nota;
+        Score = score;
     }
 
-    public int Nota { get; }
+    public int Score { get; }
 
-    public static Review Parse(string texto)
+    public static Review Parse(string textScore)
     {
-        int nota = int.Parse(texto);
-        return new Review(nota);
+        var score = int.Parse(textScore);
+        return new Review(score);
     }
 }
