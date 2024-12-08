@@ -16,7 +16,7 @@ public static class FileUtils
 	public static readonly string LayoutsDirectory =
 		Path.Combine(BaseDirectory, "Layouts");
 
-	public static void Initialize()
+	public static void CreateAppDirectories()
 	{
 		string[] mainDirectories =
 			{ BaseDirectory, StorageDirectory, LayoutsDirectory };
