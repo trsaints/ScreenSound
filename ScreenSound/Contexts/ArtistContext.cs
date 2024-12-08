@@ -1,5 +1,6 @@
 using ScreenSound.Models;
 using ScreenSound.Repositories.Interfaces;
+using ScreenSound.Views;
 
 
 namespace ScreenSound.Contexts;
@@ -12,9 +13,25 @@ public class ArtistContext : Context<Artist>
 	{
 	}
 
-	public override void Register()
+	public override async Task Register()
 	{
-		throw new NotImplementedException();
+		InputView userInput = new("Register Artist");
+		userInput.BuildLayout();
+
+		userInput.ReadInput("Name", "Enter the name of the artist: ");
+
+		Artist newArtist = new(userInput.GetEntry("Name"));
+
+		var successfulTask = await Repository.Add(newArtist);
+
+		if (!successfulTask)
+		{
+			Console.WriteLine("Failed to register artist.");
+			Thread.Sleep(3000);
+		}
+		
+		Console.WriteLine($"Artist \"{newArtist.Name}\" registered successfully.");
+		Thread.Sleep(3000);
 	}
 
 	public override void ViewAll()
@@ -27,17 +44,17 @@ public class ArtistContext : Context<Artist>
 		throw new NotImplementedException();
 	}
 
-	public override void Remove()
+	public override Task Remove()
 	{
 		throw new NotImplementedException();
 	}
 
-	public override void AddReview()
+	public override Task AddReview()
 	{
 		throw new NotImplementedException();
 	}
 
-	public override void Update()
+	public override Task Update()
 	{
 		throw new NotImplementedException();
 	}

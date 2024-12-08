@@ -29,19 +29,19 @@ public abstract class Context<T> : IContext<T> where T : Entity
 		InitContextOptions();
 	}
 
-	protected readonly IRepository<T> Repository;
-	private readonly   MenuView _menu;
-	private readonly   string _title = $"{typeof(T).Name}";
+	protected readonly IRepository<T>           Repository;
+	private readonly   MenuView                 _menu;
+	private readonly   string                   _title = $"{typeof(T).Name}";
 	private readonly   Dictionary<uint, Action> _menuActions = new();
 
 	private void InitContextOptions()
 	{
-		_menuActions.Add(1, Register);
+		_menuActions.Add(1, () => Register());
 		_menuActions.Add(2, ViewAll);
 		_menuActions.Add(3, ViewDetails);
-		_menuActions.Add(4, Remove);
-		_menuActions.Add(5, AddReview);
-		_menuActions.Add(6, Update);
+		_menuActions.Add(4, () => Remove());
+		_menuActions.Add(5, () => AddReview());
+		_menuActions.Add(6, () => Update());
 	}
 
 	public void Run()
@@ -54,10 +54,10 @@ public abstract class Context<T> : IContext<T> where T : Entity
 		_menuActions[(uint)_menu.ChosenOption].Invoke();
 	}
 
-	public abstract void Register();
+	public abstract Task Register();
 	public abstract void ViewAll();
 	public abstract void ViewDetails();
-	public abstract void Remove();
-	public abstract void AddReview();
-	public abstract void Update();
+	public abstract Task Remove();
+	public abstract Task AddReview();
+	public abstract Task Update();
 }
