@@ -13,8 +13,18 @@ public abstract class Context<T> : IContext<T> where T : Entity
 	{
 		Repository = repository;
 
-		var menuOptions = GetType().GetMethods().Select(m => m.Name);
-		Menu = new MenuView(Title, "Welcome", menuOptions);
+		var menuOptions = GetType()
+		                  .GetMethods()
+		                  .Select(method => method.Name)
+		                  .Where(methodName => methodName != "ToString"
+		                                       && methodName != "Equals"
+		                                       && methodName != "GetHashCode"
+		                                       && methodName != "GetType"
+		                                       && methodName != "Run")
+		                  .ToArray();
+
+		Menu = new MenuView(Title, "Welcome. ", menuOptions);
+		Menu.BuildLayout();
 	}
 
 	protected readonly IRepository<T> Repository;
@@ -23,7 +33,7 @@ public abstract class Context<T> : IContext<T> where T : Entity
 
 	public void Run()
 	{
-		throw new NotImplementedException();
+		Menu.ReadEntry();
 	}
 
 	public void Register(T data)

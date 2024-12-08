@@ -10,7 +10,7 @@ public abstract class View : IView
 	protected readonly StringBuilder Layout = new();
 	protected readonly string        Title;
 
-	protected readonly string Logo = @"
+	protected const string Logo = @"
 
 ░██████╗░█████╗░██████╗░███████╗███████╗███╗░░██╗  ░██████╗░█████╗░██╗░░░██╗███╗░░██╗██████╗░
 ██╔════╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗░██║  ██╔════╝██╔══██╗██║░░░██║████╗░██║██╔══██╗
