@@ -1,5 +1,6 @@
 using ScreenSound.Services.Interfaces;
 using System.Text.Json;
+using ScreenSound.Exceptions;
 using ScreenSound.Models;
 using ScreenSound.Utils;
 
@@ -11,24 +12,24 @@ public sealed class StorageService<T> : IStorageService<T> where T : IReviewable
 {
 	public StorageService()
 	{
-		if (File.Exists(_dataFilePath)) return;
+		if (File.Exists(DataFilePath)) return;
 
-		File.Create(_dataFilePath).Dispose();
+		File.Create(DataFilePath).Dispose();
 	}
 
-	private readonly string _dataFilePath
+	public readonly string DataFilePath
 		= Path.Combine(FileUtils.StorageDirectory, $"{typeof(T).Name}s.json");
 
 	public async Task SaveAsync(List<T>? items)
 	{
-		await using var fileStream = File.OpenWrite(_dataFilePath);
+		await using var fileStream = File.OpenWrite(DataFilePath);
 
 		await JsonSerializer.SerializeAsync(fileStream, items);
 	}
 
 	public async Task<List<T>?> LoadAsync()
 	{
-		await using var fileStream = File.OpenRead(_dataFilePath);
+		await using var fileStream = File.OpenRead(DataFilePath);
 
 		List<T>? items;
 
@@ -39,8 +40,7 @@ public sealed class StorageService<T> : IStorageService<T> where T : IReviewable
 		catch (Exception e) when (e is ArgumentNullException or JsonException
 			                          or NotSupportedException)
 		{
-			Console.WriteLine(e.Message);
-			return null;
+			throw new InvalidDatasetException(e.Message);
 		}
 
 		return items;
