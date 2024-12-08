@@ -23,22 +23,40 @@ public abstract class Context<T> : IContext<T> where T : Entity
 		                                       && methodName != "Run")
 		                  .ToArray();
 
-		Menu = new MenuView(Title, "Welcome. ", menuOptions);
-		Menu.BuildLayout();
+		_menu = new MenuView(Title, $"Welcome to {typeof(T).Name}'s context. ",
+		                     menuOptions);
+		_menu.BuildLayout();
+		InitContextOptions();
 	}
 
-	protected readonly IRepository<T> Repository;
-	public readonly    MenuView       Menu;
-	private const      string         Title = $"{nameof(T)} Context";
+	protected readonly IRepository<T>           Repository;
+	private readonly   MenuView                 _menu;
+	private const      string                   Title = $"{nameof(T)} Context";
+	private readonly   Dictionary<uint, Action> _menuActions = new();
+
+	private void InitContextOptions()
+	{
+		_menuActions.Add(1, Register);
+		_menuActions.Add(2, ViewAll);
+		_menuActions.Add(3, ViewDetails);
+		_menuActions.Add(4, Remove);
+		_menuActions.Add(5, AddReview);
+		_menuActions.Add(6, Update);
+	}
 
 	public void Run()
 	{
-		Menu.ReadEntry();
+		_menu.ReadEntry();
+
+		if (_menu.ChosenOption == -1)
+			return;
+
+		_menuActions[(uint)_menu.ChosenOption].Invoke();
 	}
 
-	public void Register(T data)
+
+	public void Register()
 	{
-		throw new NotImplementedException();
 	}
 
 	public void ViewAll()
@@ -46,22 +64,22 @@ public abstract class Context<T> : IContext<T> where T : Entity
 		throw new NotImplementedException();
 	}
 
-	public void ViewDetails(int id)
+	public void ViewDetails()
 	{
 		throw new NotImplementedException();
 	}
 
-	public void Remove(int id)
+	public void Remove()
 	{
 		throw new NotImplementedException();
 	}
 
-	public void Review(int id)
+	public void AddReview()
 	{
 		throw new NotImplementedException();
 	}
 
-	public void Update(int id, T newData)
+	public void Update()
 	{
 		throw new NotImplementedException();
 	}
