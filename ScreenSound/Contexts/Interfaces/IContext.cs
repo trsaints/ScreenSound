@@ -6,7 +6,7 @@ namespace ScreenSound.Contexts.Interfaces;
 
 public interface IContext
 {
-	public void Run();
+	public Task Init();
 }
 
 public interface IContext<T> : IContext

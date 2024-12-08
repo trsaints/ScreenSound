@@ -26,32 +26,44 @@ public abstract class Context<T> : IContext<T> where T : Entity
 		_menu = new MenuView(_title, $"Welcome to ${_title} Context. ",
 		                     menuOptions);
 		_menu.BuildLayout();
-		InitContextOptions();
+		InitMenuActions();
 	}
 
-	protected readonly IRepository<T>           Repository;
-	private readonly   MenuView                 _menu;
-	private readonly   string                   _title = $"{typeof(T).Name}";
-	private readonly   Dictionary<uint, Action> _menuActions = new();
+	protected readonly IRepository<T> Repository;
+	private readonly   MenuView _menu;
+	private readonly   string _title = $"{typeof(T).Name}";
+	private readonly   Dictionary<uint, Func<Task>> _menuActions = new();
 
-	private void InitContextOptions()
+	private void InitMenuActions()
 	{
-		_menuActions.Add(1, () => Register());
-		_menuActions.Add(2, ViewAll);
-		_menuActions.Add(3, ViewDetails);
-		_menuActions.Add(4, () => Remove());
-		_menuActions.Add(5, () => AddReview());
-		_menuActions.Add(6, () => Update());
+		_menuActions.Add(1, async () => await Register());
+		_menuActions.Add(2, async () =>
+		{
+			ViewAll();
+			await Task.CompletedTask;
+		});
+		_menuActions.Add(3, async () =>
+		{
+			ViewDetails();
+			await Task.CompletedTask;
+		});
+		_menuActions.Add(4, async () => await Remove());
+		_menuActions.Add(5, async () => await AddReview());
+		_menuActions.Add(6, async () => await Update());
 	}
 
-	public void Run()
+	public Task Init()
 	{
-		_menu.ReadEntry();
+		return Task.Run(async () =>
+		{
+			_menu.ReadEntry();
 
-		if (_menu.ChosenOption == -1)
-			return;
+			if (_menu.ChosenOption == -1)
+				return Task.CompletedTask;
 
-		_menuActions[(uint)_menu.ChosenOption].Invoke();
+			await _menuActions[(uint)_menu.ChosenOption]();
+			return Task.CompletedTask;
+		});
 	}
 
 	public abstract Task Register();

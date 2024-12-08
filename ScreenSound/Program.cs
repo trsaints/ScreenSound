@@ -5,7 +5,6 @@ using ScreenSound.Repositories;
 using ScreenSound.Utils;
 using ScreenSound.Views;
 
-
 FileUtils.CreateAppDirectories();
 
 ArtistRepository artistRepository = new();
@@ -16,17 +15,18 @@ Context<Artist> artistContext = new ArtistContext(artistRepository);
 Context<Album>  albumContext  = new AlbumContext(albumRepository);
 Context<Track>  trackContext  = new TrackContext(trackRepository);
 
-Dictionary<int, IContext> contexts = new();
+Dictionary<int, IContext> contexts = new()
+{
+	{ 1, artistContext },
+	{ 2, albumContext },
+	{ 3, trackContext }
+};
 
-contexts.Add(1, artistContext);
-contexts.Add(2, albumContext);
-contexts.Add(3, trackContext);
-
-Init();
+await Init();
 
 return;
 
-void Init()
+async Task Init()
 {
 	while (true)
 	{
@@ -42,9 +42,9 @@ void Init()
 		if (contexts.ContainsKey(mainMenu.ChosenOption))
 		{
 			var chosenContext = contexts[mainMenu.ChosenOption];
-			chosenContext.Run();
+			await chosenContext.Init();
 
-			if (mainMenu.ChosenOption > 0) continue;
+			if (mainMenu.ChosenOption != 4) continue;
 		}
 
 		break;
