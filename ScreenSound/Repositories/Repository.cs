@@ -7,7 +7,7 @@ using ScreenSound.Services;
 namespace ScreenSound.Repositories;
 
 
-public abstract class Repository<T> : IRepository<T> where T : Entity, IReviewable
+public abstract class Repository<T> : IRepository<T> where T : Entity
 {
 	protected          List<T>?          Dataset;
 	protected readonly StorageService<T> StorageService = new();

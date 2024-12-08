@@ -23,15 +23,15 @@ public abstract class Context<T> : IContext<T> where T : Entity
 		                                       && methodName != "Run")
 		                  .ToArray();
 
-		_menu = new MenuView(Title, $"Welcome to {typeof(T).Name}'s context. ",
+		_menu = new MenuView(_title, $"Welcome to ${_title} Context. ",
 		                     menuOptions);
 		_menu.BuildLayout();
 		InitContextOptions();
 	}
 
-	protected readonly IRepository<T>           Repository;
-	private readonly   MenuView                 _menu;
-	private const      string                   Title = $"{nameof(T)} Context";
+	protected readonly IRepository<T> Repository;
+	private readonly   MenuView _menu;
+	private readonly   string _title = $"{typeof(T).Name}";
 	private readonly   Dictionary<uint, Action> _menuActions = new();
 
 	private void InitContextOptions()
@@ -54,33 +54,10 @@ public abstract class Context<T> : IContext<T> where T : Entity
 		_menuActions[(uint)_menu.ChosenOption].Invoke();
 	}
 
-
-	public void Register()
-	{
-	}
-
-	public void ViewAll()
-	{
-		throw new NotImplementedException();
-	}
-
-	public void ViewDetails()
-	{
-		throw new NotImplementedException();
-	}
-
-	public void Remove()
-	{
-		throw new NotImplementedException();
-	}
-
-	public void AddReview()
-	{
-		throw new NotImplementedException();
-	}
-
-	public void Update()
-	{
-		throw new NotImplementedException();
-	}
+	public abstract void Register();
+	public abstract void ViewAll();
+	public abstract void ViewDetails();
+	public abstract void Remove();
+	public abstract void AddReview();
+	public abstract void Update();
 }
