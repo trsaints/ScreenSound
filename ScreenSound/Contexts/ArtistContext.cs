@@ -26,12 +26,10 @@ public class ArtistContext : Context<Artist>
 
 		if (!successfulTask)
 		{
-			Console.WriteLine("Failed to register artist.");
-			Thread.Sleep(3000);
+			userInput.ReadInput("Error", "An error occurred while registering the artist. Press [Enter] to continue.");
 		}
 		
-		Console.WriteLine($"Artist \"{newArtist.Name}\" registered successfully.");
-		Thread.Sleep(3000);
+		userInput.ReadInput("Success", $"Artist \"{newArtist.Name}\" registered successfully.\nPress [Enter] to continue.");
 	}
 
 	public override void ViewAll()
