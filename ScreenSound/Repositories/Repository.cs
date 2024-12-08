@@ -51,7 +51,7 @@ public abstract class Repository<T> : IRepository<T> where T : Entity
 		return Dataset;
 	}
 
-	public T GetById(ulong? id)
+	public T? GetById(ulong id)
 	{
 		return Dataset.FirstOrDefault(t => t.Id == id);
 	}
@@ -84,7 +84,7 @@ public abstract class Repository<T> : IRepository<T> where T : Entity
 		return true;
 	}
 
-	public async Task<bool> Delete(ulong? id)
+	public async Task<bool> Delete(ulong id)
 	{
 		var modelo = GetById(id);
 

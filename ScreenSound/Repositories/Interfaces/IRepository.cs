@@ -7,13 +7,13 @@ public interface IRepository<T>
 
 	public List<T> GetAll();
 
-	public T GetById(ulong? id);
+	public T? GetById(ulong id);
 
 	public T GetByName(string? name);
 
 	public Task<bool> Update(T entity);
 
-	public Task<bool> Delete(ulong? id);
+	public Task<bool> Delete(ulong id);
 
 	public abstract bool Exists(T entity);
 }
