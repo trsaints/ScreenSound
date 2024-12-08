@@ -11,15 +11,15 @@ public interface IContext
 
 public interface IContext<T> : IContext
 {
-	public void Register(T data);
+	public void Register();
 
 	public void ViewAll();
 
-	public void ViewDetails(int id);
+	public void ViewDetails();
 
-	public void Remove(int id);
+	public void Remove();
 
-	public void Review(int id);
+	public void AddReview();
 
-	public void Update(int id, T newData);
+	public void Update();
 }
