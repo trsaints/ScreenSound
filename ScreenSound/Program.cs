@@ -1,8 +1,26 @@
-﻿using ScreenSound.Contexts.Interfaces;
+﻿using ScreenSound.Contexts;
+using ScreenSound.Contexts.Interfaces;
 using ScreenSound.Models;
+using ScreenSound.Repositories;
+using ScreenSound.Utils;
 using ScreenSound.Views;
 
-Dictionary<int, IContext<IReviewable>> mainOptions = new();
+
+FileUtils.CreateAppDirectories();
+
+ArtistRepository artistRepository = new();
+AlbumRepository  albumRepository  = new();
+TrackRepository  trackRepository  = new();
+
+Context<Artist> artistContext = new ArtistContext(artistRepository);
+Context<Album>  albumContext  = new AlbumContext(albumRepository);
+Context<Track>  trackContext  = new TrackContext(trackRepository);
+
+Dictionary<int, IContext> contexts = new();
+
+contexts.Add(1, artistContext);
+contexts.Add(2, albumContext);
+contexts.Add(3, trackContext);
 
 Init();
 
@@ -21,9 +39,9 @@ void Init()
 		mainMenu.BuildLayout();
 		mainMenu.ReadEntry();
 
-		if (mainOptions.ContainsKey(mainMenu.ChosenOption))
+		if (contexts.ContainsKey(mainMenu.ChosenOption))
 		{
-			var chosenContext = mainOptions[mainMenu.ChosenOption];
+			var chosenContext = contexts[mainMenu.ChosenOption];
 			chosenContext.Run();
 
 			if (mainMenu.ChosenOption > 0) continue;
