@@ -40,7 +40,7 @@ public sealed class StorageService<T> : IStorageService<T> where T : IReviewable
 		catch (Exception e) when (e is ArgumentNullException or JsonException
 			                          or NotSupportedException)
 		{
-			throw new InvalidDatasetException(e.Message);
+			return new List<T>();
 		}
 
 		return items;
