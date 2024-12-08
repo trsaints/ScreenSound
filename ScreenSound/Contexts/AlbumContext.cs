@@ -11,7 +11,7 @@ public class AlbumContext : Context<Album>
 	{
 	}
 
-	public override void Register()
+	public override Task Register()
 	{
 		throw new NotImplementedException();
 	}
@@ -26,17 +26,17 @@ public class AlbumContext : Context<Album>
 		throw new NotImplementedException();
 	}
 
-	public override void Remove()
+	public override Task Remove()
 	{
 		throw new NotImplementedException();
 	}
 
-	public override void AddReview()
+	public override Task AddReview()
 	{
 		throw new NotImplementedException();
 	}
 
-	public override void Update()
+	public override Task Update()
 	{
 		throw new NotImplementedException();
 	}
