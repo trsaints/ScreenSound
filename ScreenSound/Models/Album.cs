@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using ScreenSound.Repositories;
 
 
 namespace ScreenSound.Models;
@@ -6,16 +7,17 @@ namespace ScreenSound.Models;
 
 public class Album : Entity
 {
-	public Album(string name)
+	public Album(string name, ulong artistId)
 	{
-		Name = name;
+		ArtistId = artistId;
+		Name     = name;
 	}
 
-	private readonly List<Track>  _tracks = new();
-	private readonly List<Review> _scores = new();
+	private readonly ulong  ArtistId;
+	public readonly  string Name;
 
-	public string Name          { get; }
-	public long   AlbumDuration => _tracks.Sum(track => track.Duration);
+	private readonly List<ulong>  _tracksIds = new();
+	private readonly List<Review> _scores = new();
 
 	public override double AverageScore
 	{
@@ -27,31 +29,47 @@ public class Album : Entity
 		}
 	}
 
-	public List<Track> Tracks => _tracks;
-
-	public void AddTrack(Track track)
-	{
-		_tracks.Add(track);
-	}
+	public List<ulong> TracksIds => _tracksIds;
 
 	public override void AddReview(Review review)
 	{
 		_scores.Add(review);
 	}
 
-	public void DisplayAlbumTracks()
+	public void DisplayAlbumTracks(ArtistRepository artists,  TrackRepository tracks)
 	{
-		Console.WriteLine($"Track list of \"{Name}\":\n");
+		var artist = artists.GetById(ArtistId);
+		Console.WriteLine($"Album: \"{Name}\" by \"{artist?.Name}\":\n");
 		StringBuilder trackContent = new();
 
-		foreach (var track in _tracks)
+		foreach (var track in _tracksIds)
 		{
+			var trackData = tracks.GetById(track);
+
+			if (trackData is null) continue;
+
 			trackContent.AppendLine(
-				$"Track: \"{track.Name}\" \t\t Duration: {track.Duration}");
+				$"Track: \"{trackData.Name}\" \t\t Duration: {trackData.Duration}");
 		}
 
 		Console.WriteLine(trackContent.ToString());
 		Console.WriteLine(
-			$"\nFor listening to the whole album, it takes {AlbumDuration}s");
+			$"\nFor listening to the whole album, it takes {GetAlbumDuration(tracks)}s");
+	}
+	
+	public uint GetAlbumDuration(TrackRepository repository)
+	{
+		uint duration = 0;
+
+		foreach (var track in _tracksIds)
+		{
+			var trackData = repository.GetById(track);
+
+			if (trackData is null) continue;
+
+			duration += trackData.Duration;
+		}
+
+		return duration;
 	}
 }

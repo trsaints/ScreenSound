@@ -6,23 +6,28 @@ namespace ScreenSound.Models;
 
 public class Track : Entity
 {
-	public Track(Artist artist, string name)
+	public Track(ulong artistId,
+	             ulong albumId,
+	             string name,
+	             uint duration,
+	             bool available)
 	{
-		Artist = artist;
-		Name   = name;
+		ArtistId  = artistId;
+		AlbumId   = albumId;
+		Name      = name;
+		Duration  = duration;
+		Available = available;
 	}
 
 	private readonly List<Review> _scores = new();
 
-	public string Name      { get; }
-	public Artist Artist    { get; }
-	public uint   Duration  { get; set; }
-	public bool   Available { get; set; }
+	public readonly string Name;
+	public readonly ulong  ArtistId;
+	public readonly ulong  AlbumId;
+	public readonly uint   Duration;
+	public readonly bool   Available;
 
-	public string ShortDescription =>
-		$"A this track, \"{Name}\", belongs to \"{Artist}\"";
-
-	public void DisplayResume()
+	public void DisplayDetails()
 	{
 		var trackProperties = GetType().GetProperties();
 		var trackInfo = trackProperties.ToDictionary(info => info.Name,

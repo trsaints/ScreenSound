@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using ScreenSound.Repositories;
 
 
 namespace ScreenSound.Models;
@@ -25,28 +26,27 @@ public class Artist : Entity
 		}
 	}
 
-	public List<Album> Albums { get; } = new();
-
-	public void AddAlbum(Album album)
-	{
-		Albums.Add(album);
-	}
-
+	public readonly List<ulong> AlbumsIds = new();
+	
 	public override void AddReview(Review review)
 	{
 		_reviews.Add(review);
 	}
 
-	public void DisplayDiscography()
+	public void DisplayDiscography(AlbumRepository albums, TrackRepository tracks)
 	{
 		Console.WriteLine($"{Name}'s Discography");
 
 		StringBuilder discography = new();
 
-		foreach (var album in Albums)
+		foreach (var album in AlbumsIds)
 		{
+			var albumData = albums.GetById(album);
+
+			if (albumData is null) continue;
+			
 			discography.AppendLine(
-				$"Album: {album.Name} \t-\t({album.AlbumDuration})");
+				$"Album: {albumData.Name} \t-\t({albumData.GetAlbumDuration(tracks)})");
 		}
 
 		Console.WriteLine(discography.ToString());
