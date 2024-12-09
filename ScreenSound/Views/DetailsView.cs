@@ -12,10 +12,12 @@ public class DetailsView : View
 		_details = details;
 	}
 
-	public override void BuildLayout()
+	public override string BuildLayout()
 	{
 		foreach (var detail in
 		         _details)
 			Layout.AppendLine($"{detail.Key}: {detail.Value}");
+		
+		return Layout.ToString();
 	}
 }

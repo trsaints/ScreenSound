@@ -40,10 +40,12 @@ public sealed class InputView : View, IInputView
 		return entry ?? "";
 	}
 
-	public override void BuildLayout()
+	public override string BuildLayout()
 	{
 		Layout.AppendLine(Title);
 		Layout.AppendLine();
 		Layout.Append(_messagePrompt);
+		
+		return Layout.ToString();
 	}
 }

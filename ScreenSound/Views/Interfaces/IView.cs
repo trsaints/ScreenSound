@@ -5,5 +5,5 @@ public interface IView
 {
 	public void Display();
 
-	public void BuildLayout();
+	public string BuildLayout();
 }

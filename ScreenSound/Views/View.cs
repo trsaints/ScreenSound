@@ -31,8 +31,10 @@ public abstract class View : IView
 		Console.Write(Layout.ToString());
 	}
 
-	public virtual void BuildLayout()
+	public virtual string BuildLayout()
 	{
 		Layout.AppendLine(Title);
+		
+		return Layout.ToString();
 	}
 }

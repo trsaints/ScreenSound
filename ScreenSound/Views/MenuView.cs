@@ -33,7 +33,7 @@ public class MenuView : View, IMenuView
 		ChosenOption = chosenOption;
 	}
 
-	public override void BuildLayout()
+	public override string BuildLayout()
 	{
 		Layout.Append(Logo);
 		Layout.Append(_header);
@@ -45,5 +45,7 @@ public class MenuView : View, IMenuView
 
 		Layout.AppendLine();
 		Layout.Append("Your choice (numbers only): ");
+
+		return Layout.ToString();
 	}
 }
