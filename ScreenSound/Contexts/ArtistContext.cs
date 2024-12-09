@@ -34,7 +34,9 @@ public class ArtistContext : Context<Artist>
 
 	public override void ViewAll()
 	{
-		throw new NotImplementedException();
+		PageView artistPages = new("Artists", Repository.GetAll());
+		artistPages.BuildLayout();
+		artistPages.Display();
 	}
 
 	public override void ViewDetails()
