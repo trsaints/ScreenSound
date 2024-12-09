@@ -20,10 +20,7 @@ public abstract class View : IView
 	protected readonly StringBuilder Layout = new();
 	protected readonly string        Title;
 
-	protected View(string title)
-	{
-		Title = title;
-	}
+	protected View(string title) { Title = title; }
 
 	public virtual void Display()
 	{
@@ -34,7 +31,27 @@ public abstract class View : IView
 	public virtual string BuildLayout()
 	{
 		Layout.AppendLine(Title);
-		
+
 		return Layout.ToString();
+	}
+
+	public string GenerateHeader(string title)
+	{
+		StringBuilder headerLines = new();
+		StringBuilder header      = new();
+		
+		var           windowWidth = Console.WindowWidth;
+
+		for (var i = 0; i < windowWidth; i++)
+		{
+			headerLines.Append('\u25a9');
+		}
+
+		header.AppendLine(headerLines.ToString());
+		header.AppendLine(title.PadLeft((windowWidth + title.Length) / 2)
+		                       .PadRight(windowWidth));
+		header.AppendLine(headerLines.ToString());
+
+		return header.ToString();
 	}
 }

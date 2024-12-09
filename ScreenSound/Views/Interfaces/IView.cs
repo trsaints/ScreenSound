@@ -6,4 +6,6 @@ public interface IView
 	public void Display();
 
 	public string BuildLayout();
+
+	public string GenerateHeader(string title);
 }
