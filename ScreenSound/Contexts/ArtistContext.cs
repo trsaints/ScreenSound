@@ -34,7 +34,18 @@ public class ArtistContext : Context<Artist>
 
 	public override void ViewAll()
 	{
-		PageView artistPages = new("Artists", Repository.GetAll());
+		var artists = Repository.GetAll();
+
+		if (artists.Count is 0)
+		{
+			InputView confirmation = new("No Artists Found");
+			confirmation.BuildLayout();
+			confirmation.ReadInput("Error", "No artists were found in the database. Press [Enter] to continue.");
+
+			return;
+		}
+		
+		PageView artistPages = new("Artists", artists);
 		artistPages.BuildLayout();
 		artistPages.Display();
 	}
