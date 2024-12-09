@@ -54,6 +54,8 @@ public class PageView : View, IPageView
 		Layout.Clear();
 		Layout.AppendLine(GenerateHeader("View All Artists"));
 		Layout.AppendLine(CurrentContent);
+		Layout.AppendLine();
+		Layout.AppendLine(GenerateLineSeparator('-'));
 		Layout.AppendLine($"Page: {CurrentPage + 1}/{_contents.Count}");
 		Layout.AppendLine("[Left/Right] to navigate \t\t\t [Esc] to exit");
 
