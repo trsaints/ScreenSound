@@ -8,4 +8,6 @@ public interface IView
 	public string BuildLayout();
 
 	public string GenerateHeader(string title);
+
+	public string GenerateLineSeparator();
 }

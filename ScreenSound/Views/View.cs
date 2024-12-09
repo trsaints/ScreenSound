@@ -18,7 +18,8 @@ public abstract class View : IView
 ";
 
 	protected readonly StringBuilder Layout = new();
-	protected readonly string        Title;
+
+	protected readonly string Title;
 
 	protected View(string title) { Title = title; }
 
@@ -37,21 +38,29 @@ public abstract class View : IView
 
 	public string GenerateHeader(string title)
 	{
-		StringBuilder headerLines = new();
-		StringBuilder header      = new();
-		
-		var           windowWidth = Console.WindowWidth;
+		StringBuilder header = new();
 
-		for (var i = 0; i < windowWidth; i++)
-		{
-			headerLines.Append('\u25a9');
-		}
+		var windowWidth = Console.WindowWidth;
+		var headerLines = GenerateLineSeparator();
 
-		header.AppendLine(headerLines.ToString());
+		header.AppendLine(headerLines);
 		header.AppendLine(title.PadLeft((windowWidth + title.Length) / 2)
 		                       .PadRight(windowWidth));
-		header.AppendLine(headerLines.ToString());
+		header.AppendLine(headerLines);
 
 		return header.ToString();
+	}
+
+
+	public string GenerateLineSeparator()
+	{
+		StringBuilder separator = new();
+
+		for (var i = 0; i < Console.WindowWidth; i++)
+		{
+			separator.Append('\u25a9');
+		}
+
+		return separator.ToString();
 	}
 }
