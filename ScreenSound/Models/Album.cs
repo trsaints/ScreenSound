@@ -7,17 +7,16 @@ namespace ScreenSound.Models;
 
 public class Album : Entity
 {
+	private readonly List<Review> _scores = new();
+
+	private readonly ulong  ArtistId;
+	public readonly  string Name;
+
 	public Album(string name, ulong artistId)
 	{
 		ArtistId = artistId;
 		Name     = name;
 	}
-
-	private readonly ulong  ArtistId;
-	public readonly  string Name;
-
-	private readonly List<ulong>  _tracksIds = new();
-	private readonly List<Review> _scores = new();
 
 	public override double AverageScore
 	{
@@ -29,20 +28,21 @@ public class Album : Entity
 		}
 	}
 
-	public List<ulong> TracksIds => _tracksIds;
+	public List<ulong> TracksIds { get; } = new();
 
 	public override void AddReview(Review review)
 	{
 		_scores.Add(review);
 	}
 
-	public void DisplayAlbumTracks(ArtistRepository artists,  TrackRepository tracks)
+	public void DisplayAlbumTracks(ArtistRepository artists,
+	                               TrackRepository tracks)
 	{
 		var artist = artists.GetById(ArtistId);
 		Console.WriteLine($"Album: \"{Name}\" by \"{artist?.Name}\":\n");
 		StringBuilder trackContent = new();
 
-		foreach (var track in _tracksIds)
+		foreach (var track in TracksIds)
 		{
 			var trackData = tracks.GetById(track);
 
@@ -56,12 +56,12 @@ public class Album : Entity
 		Console.WriteLine(
 			$"\nFor listening to the whole album, it takes {GetAlbumDuration(tracks)}s");
 	}
-	
+
 	public uint GetAlbumDuration(TrackRepository repository)
 	{
 		uint duration = 0;
 
-		foreach (var track in _tracksIds)
+		foreach (var track in TracksIds)
 		{
 			var trackData = repository.GetById(track);
 

@@ -25,11 +25,11 @@ public class ArtistContext : Context<Artist>
 		var successfulTask = await Repository.Add(newArtist);
 
 		if (!successfulTask)
-		{
-			userInput.ReadInput("Error", "An error occurred while registering the artist. Press [Enter] to continue.");
-		}
-		
-		userInput.ReadInput("Success", $"Artist \"{newArtist.Name}\" registered successfully.\nPress [Enter] to continue.");
+			userInput.ReadInput("Error",
+			                    "An error occurred while registering the artist. Press [Enter] to continue.");
+
+		userInput.ReadInput("Success",
+		                    $"Artist \"{newArtist.Name}\" registered successfully.\nPress [Enter] to continue.");
 	}
 
 	public override void ViewAll()

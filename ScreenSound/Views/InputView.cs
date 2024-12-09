@@ -1,7 +1,8 @@
+using ScreenSound.Views.Interfaces;
+
+
 namespace ScreenSound.Views;
 
-
-using Interfaces;
 
 public sealed class InputView : View, IInputView
 {
@@ -11,13 +12,6 @@ public sealed class InputView : View, IInputView
 
 	public InputView(string title) : base(title)
 	{
-	}
-
-	public override void BuildLayout()
-	{
-		Layout.AppendLine(Title);
-		Layout.AppendLine();
-		Layout.Append(_messagePrompt);
 	}
 
 	public void ReadInput(string key, string? messagePrompt = null)
@@ -44,5 +38,12 @@ public sealed class InputView : View, IInputView
 		_ = UserEntries.TryGetValue(key, out var entry);
 
 		return entry ?? "";
+	}
+
+	public override void BuildLayout()
+	{
+		Layout.AppendLine(Title);
+		Layout.AppendLine();
+		Layout.Append(_messagePrompt);
 	}
 }

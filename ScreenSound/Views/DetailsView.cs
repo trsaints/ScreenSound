@@ -3,14 +3,14 @@ namespace ScreenSound.Views;
 
 public class DetailsView : View
 {
+	private readonly Dictionary<string, string> _details;
+
 	public DetailsView(string title,
 	                   Dictionary<string, string> details) :
 		base(title)
 	{
 		_details = details;
 	}
-
-	private readonly Dictionary<string, string> _details;
 
 	public override void BuildLayout()
 	{

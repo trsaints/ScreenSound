@@ -1,7 +1,6 @@
-using ScreenSound.Services.Interfaces;
 using System.Text.Json;
-using ScreenSound.Exceptions;
 using ScreenSound.Models;
+using ScreenSound.Services.Interfaces;
 using ScreenSound.Utils;
 
 
@@ -10,15 +9,15 @@ namespace ScreenSound.Services;
 
 public sealed class StorageService<T> : IStorageService<T> where T : IReviewable
 {
+	public readonly string DataFilePath
+		= Path.Combine(FileUtils.StorageDirectory, $"{typeof(T).Name}s.json");
+
 	public StorageService()
 	{
 		if (File.Exists(DataFilePath)) return;
 
 		File.Create(DataFilePath).Dispose();
 	}
-
-	public readonly string DataFilePath
-		= Path.Combine(FileUtils.StorageDirectory, $"{typeof(T).Name}s.json");
 
 	public async Task SaveAsync(List<T>? items)
 	{

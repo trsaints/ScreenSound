@@ -7,9 +7,6 @@ namespace ScreenSound.Views;
 
 public abstract class View : IView
 {
-	protected readonly StringBuilder Layout = new();
-	protected readonly string        Title;
-
 	protected const string Logo = @"
 
 ░██████╗░█████╗░██████╗░███████╗███████╗███╗░░██╗  ░██████╗░█████╗░██╗░░░██╗███╗░░██╗██████╗░
@@ -19,6 +16,9 @@ public abstract class View : IView
 ██████╔╝╚█████╔╝██║░░██║███████╗███████╗██║░╚███║  ██████╔╝╚█████╔╝╚██████╔╝██║░╚███║██████╔╝
 ╚═════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚══════╝╚═╝░░╚══╝  ╚═════╝░░╚════╝░░╚═════╝░╚═╝░░╚══╝╚═════╝░
 ";
+
+	protected readonly StringBuilder Layout = new();
+	protected readonly string        Title;
 
 	protected View(string title)
 	{

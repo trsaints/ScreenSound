@@ -6,6 +6,14 @@ namespace ScreenSound.Models;
 
 public class Track : Entity
 {
+	private readonly List<Review> _reviews = new();
+	public readonly  ulong        AlbumId;
+	public readonly  ulong        ArtistId;
+	public readonly  bool         Available;
+	public readonly  uint         Duration;
+
+	public readonly string Name;
+
 	public Track(ulong artistId,
 	             ulong albumId,
 	             string name,
@@ -19,13 +27,15 @@ public class Track : Entity
 		Available = available;
 	}
 
-	private readonly List<Review> _scores = new();
+	public override double AverageScore
+	{
+		get
+		{
+			if (_reviews.Count == 0) return 0;
 
-	public readonly string Name;
-	public readonly ulong  ArtistId;
-	public readonly ulong  AlbumId;
-	public readonly uint   Duration;
-	public readonly bool   Available;
+			return _reviews.Average(review => review.Score);
+		}
+	}
 
 	public void DisplayDetails()
 	{
@@ -38,18 +48,8 @@ public class Track : Entity
 		detailsView.Display();
 	}
 
-	public override double AverageScore
-	{
-		get
-		{
-			if (_scores.Count == 0) return 0;
-
-			return _scores.Average(review => review.Score);
-		}
-	}
-
 	public override void AddReview(Review review)
 	{
-		_scores.Add(review);
+		_reviews.Add(review);
 	}
 }

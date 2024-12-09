@@ -15,5 +15,5 @@ public interface IRepository<T>
 
 	public Task<bool> Delete(ulong id);
 
-	public abstract bool Exists(T entity);
+	public bool Exists(T entity);
 }

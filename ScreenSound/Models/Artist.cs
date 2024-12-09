@@ -9,6 +9,8 @@ public class Artist : Entity
 {
 	private readonly List<Review> _reviews = new();
 
+	public readonly List<ulong> AlbumsIds = new();
+
 	public Artist(string name)
 	{
 		Name = name;
@@ -26,14 +28,13 @@ public class Artist : Entity
 		}
 	}
 
-	public readonly List<ulong> AlbumsIds = new();
-	
 	public override void AddReview(Review review)
 	{
 		_reviews.Add(review);
 	}
 
-	public void DisplayDiscography(AlbumRepository albums, TrackRepository tracks)
+	public void DisplayDiscography(AlbumRepository albums,
+	                               TrackRepository tracks)
 	{
 		Console.WriteLine($"{Name}'s Discography");
 
@@ -44,7 +45,7 @@ public class Artist : Entity
 			var albumData = albums.GetById(album);
 
 			if (albumData is null) continue;
-			
+
 			discography.AppendLine(
 				$"Album: {albumData.Name} \t-\t({albumData.GetAlbumDuration(tracks)})");
 		}
