@@ -18,17 +18,18 @@ public class PageView : View, IPageView
 
 	public override void Display()
 	{
+		base.Display();
+		
 		var userDirection = Console.ReadKey();
-
+		
 		while (true)
 		{
 			if (userDirection.Key == ConsoleKey.Escape) break;
 
-			Console.Clear();
-			Console.Write(Layout);
-
 			ChangePage(userDirection.Key);
 			BuildLayout();
+			
+			base.Display();
 
 			userDirection = Console.ReadKey();
 		}
@@ -49,9 +50,11 @@ public class PageView : View, IPageView
 			      currentProperties);
 
 		CurrentContent = objectDetails.BuildLayout();
+		
 		Layout.Clear();
 		Layout.AppendLine(CurrentContent);
-		Layout.AppendLine($"Page: {CurrentPage + 1}");
+		Layout.AppendLine($"Page: {CurrentPage + 1}/{_contents.Count}");
+		Layout.AppendLine("[Left/Right] to navigate \t\t\t [Esc] to exit");
 
 		return Layout.ToString();
 	}
