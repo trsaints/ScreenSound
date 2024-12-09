@@ -9,5 +9,5 @@ public interface IView
 
 	public string GenerateHeader(string title);
 
-	public string GenerateLineSeparator();
+	public string GenerateLineSeparator(char separator);
 }

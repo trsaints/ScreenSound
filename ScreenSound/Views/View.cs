@@ -41,7 +41,7 @@ public abstract class View : IView
 		StringBuilder header = new();
 
 		var windowWidth = Console.WindowWidth;
-		var headerLines = GenerateLineSeparator();
+		var headerLines = GenerateLineSeparator('\u25a9');
 
 		header.AppendLine(headerLines);
 		header.AppendLine(title.PadLeft((windowWidth + title.Length) / 2)
@@ -52,15 +52,15 @@ public abstract class View : IView
 	}
 
 
-	public string GenerateLineSeparator()
+	public string GenerateLineSeparator(char separator)
 	{
-		StringBuilder separator = new();
+		StringBuilder lineSeparator = new();
 
 		for (var i = 0; i < Console.WindowWidth; i++)
 		{
-			separator.Append('\u25a9');
+			lineSeparator.Append(separator);
 		}
 
-		return separator.ToString();
+		return lineSeparator.ToString();
 	}
 }
