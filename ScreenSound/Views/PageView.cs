@@ -1,0 +1,72 @@
+using ScreenSound.Models;
+using ScreenSound.Views.Interfaces;
+
+
+namespace ScreenSound.Views;
+
+
+public class PageView : View, IPageView
+{
+	public PageView(string title, IEnumerable<Entity> contents) : base(title)
+	{
+		_contents.AddRange(contents);
+	}
+
+	private readonly List<Entity> _contents = new();
+	private          uint         CurrentPage    { get; set; }
+	private          string?      CurrentContent { get; set; }
+
+	public override void Display()
+	{
+		var userDirection = Console.ReadKey();
+
+		while (true)
+		{
+			if (userDirection.Key == ConsoleKey.Escape) break;
+
+			Console.Clear();
+			Console.Write(Layout);
+
+			ChangePage(userDirection.Key);
+			BuildLayout();
+
+			userDirection = Console.ReadKey();
+		}
+	}
+
+	public override string BuildLayout()
+	{
+		var currentObject = _contents[(int)CurrentPage];
+		var currentProperties = currentObject.GetType()
+		                                     .GetProperties()
+		                                     .ToDictionary(
+			                                     p => p.Name,
+			                                     p => p.GetValue(currentObject)!
+				                                     .ToString() ?? "");
+
+		DetailsView objectDetails
+			= new("Details: " + currentObject.GetType().Name,
+			      currentProperties);
+
+		CurrentContent = objectDetails.BuildLayout();
+		Layout.Clear();
+		Layout.AppendLine(CurrentContent);
+		Layout.AppendLine($"Page: {CurrentPage + 1}");
+
+		return Layout.ToString();
+	}
+
+	public void ChangePage(ConsoleKey direction)
+	{
+		CurrentPage = direction switch
+		{
+			ConsoleKey.LeftArrow => CurrentPage == 0
+				? (uint)_contents.Count - 1
+				: CurrentPage - 1,
+			ConsoleKey.RightArrow => CurrentPage == _contents.Count - 1
+				? 0
+				: CurrentPage + 1,
+			_ => CurrentPage
+		};
+	}
+}
