@@ -40,11 +40,12 @@ public class ArtistContext : Context<Artist>
 		{
 			InputView confirmation = new("No Artists Found");
 			confirmation.BuildLayout();
-			confirmation.ReadInput("Error", "No artists were found in the database. Press [Enter] to continue.");
+			confirmation.ReadInput("Error",
+			                       "No artists were found in the database. Press [Enter] to continue.");
 
 			return;
 		}
-		
+
 		PageView artistPages = new("Artists", artists);
 		artistPages.BuildLayout();
 		artistPages.Display();
@@ -52,21 +53,38 @@ public class ArtistContext : Context<Artist>
 
 	public override void ViewDetails()
 	{
-		throw new NotImplementedException();
+		InputView searchInput = new("Search Artist");
+		searchInput.BuildLayout();
+		searchInput.ReadInput("Search",
+		                      "Enter the name of the artist to search for: ");
+
+		var artistName  = searchInput.GetEntry("Search");
+		var foundArtist = Repository.GetByName(artistName);
+
+		if (foundArtist is null)
+		{
+			searchInput.ReadInput("Error",
+			                      $"Couldn't find \"{artistName}\". Press [Enter] to continue.");
+			return;
+		}
+
+		var artistProperties = foundArtist.GetType()
+		                                  .GetProperties()
+		                                  .ToDictionary(
+			                                  p => p.Name,
+			                                  p => p.GetValue(foundArtist)
+			                                        .ToString() ?? "N/A");
+
+		DetailsView artistDetails = new("Artist Details", artistProperties);
+		var         details       = artistDetails.BuildLayout();
+
+		searchInput.ReadInput("Success",
+		                      $"{details}\nPress [Enter] to continue.");
 	}
 
-	public override Task Remove()
-	{
-		throw new NotImplementedException();
-	}
+	public override Task Remove() { throw new NotImplementedException(); }
 
-	public override Task AddReview()
-	{
-		throw new NotImplementedException();
-	}
+	public override Task AddReview() { throw new NotImplementedException(); }
 
-	public override Task Update()
-	{
-		throw new NotImplementedException();
-	}
+	public override Task Update() { throw new NotImplementedException(); }
 }
