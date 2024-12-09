@@ -9,7 +9,7 @@ public interface IRepository<T>
 
 	public T? GetById(ulong id);
 
-	public T? GetByName(string? name);
+	public T? GetByName(string name);
 
 	public Task<bool> Update(T entity);
 

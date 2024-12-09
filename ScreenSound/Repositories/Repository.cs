@@ -53,14 +53,14 @@ public abstract class Repository<T> : IRepository<T> where T : Entity
 
 	public T? GetById(ulong id)
 	{
-		return Dataset?.FirstOrDefault(t => t.Id == id);
+		return Dataset!.FirstOrDefault(t => t.Id == id);
 	}
 
-	public T? GetByName(string? name)
+	public T? GetByName(string name)
 	{
-		return Dataset?.FirstOrDefault(t =>
+		return Dataset!.FirstOrDefault(t =>
 		{
-			var nameProperty = t.GetType().GetProperty("Nome");
+			var nameProperty = t.GetType().GetProperty("Name");
 
 			var nameValue = nameProperty?.GetValue(t)?.ToString();
 
