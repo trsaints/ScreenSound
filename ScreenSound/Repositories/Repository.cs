@@ -39,7 +39,7 @@ public abstract class Repository<T> : IRepository<T> where T : Entity
 	{
 		if (Exists(entity)) return false;
 
-		Dataset.Add(entity);
+		Dataset!.Add(entity);
 
 		await StorageService.SaveAsync(Dataset);
 
@@ -48,21 +48,21 @@ public abstract class Repository<T> : IRepository<T> where T : Entity
 
 	public List<T> GetAll()
 	{
-		return Dataset;
+		return Dataset!;
 	}
 
 	public T? GetById(ulong id)
 	{
-		return Dataset.FirstOrDefault(t => t.Id == id);
+		return Dataset?.FirstOrDefault(t => t.Id == id);
 	}
 
-	public T GetByName(string? name)
+	public T? GetByName(string? name)
 	{
-		return Dataset.FirstOrDefault(t =>
+		return Dataset?.FirstOrDefault(t =>
 		{
 			var nameProperty = t.GetType().GetProperty("Nome");
 
-			var nameValue = nameProperty.GetValue(t).ToString();
+			var nameValue = nameProperty?.GetValue(t)?.ToString();
 
 			return nameValue is not null && nameValue == name;
 		});
@@ -91,7 +91,7 @@ public abstract class Repository<T> : IRepository<T> where T : Entity
 		if (modelo is null)
 			return false;
 
-		Dataset.Remove(modelo);
+		Dataset!.Remove(modelo);
 
 		await StorageService.SaveAsync(Dataset);
 
@@ -100,6 +100,6 @@ public abstract class Repository<T> : IRepository<T> where T : Entity
 
 	public virtual bool Exists(T entity)
 	{
-		return Dataset.Contains(entity);
+		return Dataset!.Contains(entity);
 	}
 }
