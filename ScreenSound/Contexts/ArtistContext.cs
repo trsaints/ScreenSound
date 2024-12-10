@@ -82,7 +82,56 @@ public class ArtistContext : Context<Artist>
 		                      $"{details}\nPress [Enter] to continue.");
 	}
 
-	public override Task Remove() { throw new NotImplementedException(); }
+	public override async Task Remove()
+	{
+		InputView searchInput = new("Delete Artist");
+		searchInput.BuildLayout();
+		searchInput.ReadInput("Delete",
+		                      "Enter the name of the artist to remove: ");
+
+		var artistName  = searchInput.GetEntry("Delete");
+		var foundArtist = Repository.GetByName(artistName);
+
+		if (foundArtist is null)
+		{
+			searchInput.ReadInput("Error",
+			                      $"Couldn't find \"{artistName}\". Press [Enter] to continue.");
+			
+			return;
+		}
+
+		var artistProperties = foundArtist.GetType()
+		                                  .GetProperties()
+		                                  .ToDictionary(
+			                                  p => p.Name,
+			                                  p => p.GetValue(foundArtist)
+			                                        .ToString() ?? "N/A");
+
+		DetailsView artistDetails = new("Artist Details", artistProperties);
+		var         details       = artistDetails.BuildLayout();
+
+		searchInput.ReadInput("Confirm",
+		                      $"{details}\nAre you sure you want to delete this Artist? [Y] [N].");
+		
+		var confirm = searchInput.GetEntry("Confirm");
+		
+		if (confirm.ToLower() == "y")
+		{
+			var successfulTask = await Repository.Delete(foundArtist.Id);
+
+			if (!successfulTask)
+				searchInput.ReadInput("Error",
+				                      "An error occurred while deleting the artist. Press [Enter] to continue.");
+
+			searchInput.ReadInput("Success",
+			                      $"Artist \"{foundArtist.Name}\" deleted successfully.\nPress [Enter] to continue.");
+			
+			return;
+		} 
+		
+		searchInput.ReadInput("Cancelled",
+		                        "Artist deletion cancelled. Press [Enter] to continue.");
+	}
 
 	public override Task AddReview() { throw new NotImplementedException(); }
 
