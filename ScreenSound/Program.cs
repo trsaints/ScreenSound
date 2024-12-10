@@ -11,9 +11,11 @@ ArtistRepository artistRepository = new();
 AlbumRepository  albumRepository  = new();
 TrackRepository  trackRepository  = new();
 
-Context<Artist> artistContext = new ArtistContext(artistRepository);
-Context<Album>  albumContext  = new AlbumContext(albumRepository);
-Context<Track>  trackContext  = new TrackContext(trackRepository);
+Context<Artist> artistContext
+	= new ArtistContext(artistRepository, albumRepository, trackRepository);
+Context<Album> albumContext = new AlbumContext(albumRepository, artistRepository);
+Context<Track> trackContext
+	= new TrackContext(trackRepository, artistRepository, albumRepository);
 
 Dictionary<int, IContext> contexts = new()
 {
