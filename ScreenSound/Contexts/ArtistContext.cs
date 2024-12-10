@@ -96,7 +96,7 @@ public class ArtistContext : Context<Artist>
 		{
 			searchInput.ReadInput("Error",
 			                      $"Couldn't find \"{artistName}\". Press [Enter] to continue.");
-			
+
 			return;
 		}
 
@@ -112,9 +112,9 @@ public class ArtistContext : Context<Artist>
 
 		searchInput.ReadInput("Confirm",
 		                      $"{details}\nAre you sure you want to delete this Artist? [Y] [N].");
-		
+
 		var confirm = searchInput.GetEntry("Confirm");
-		
+
 		if (confirm.ToLower() == "y")
 		{
 			var successfulTask = await Repository.Delete(foundArtist.Id);
@@ -125,15 +125,66 @@ public class ArtistContext : Context<Artist>
 
 			searchInput.ReadInput("Success",
 			                      $"Artist \"{foundArtist.Name}\" deleted successfully.\nPress [Enter] to continue.");
-			
+
 			return;
-		} 
-		
+		}
+
 		searchInput.ReadInput("Cancelled",
-		                        "Artist deletion cancelled. Press [Enter] to continue.");
+		                      "Artist deletion cancelled. Press [Enter] to continue.");
 	}
 
-	public override Task AddReview() { throw new NotImplementedException(); }
+	public override async Task AddReview()
+	{
+		InputView searchInput = new("Add Review");
+		searchInput.BuildLayout();
+
+		searchInput.ReadInput("Review",
+		                      "Enter the name of the artist: ");
+
+		var artistName  = searchInput.GetEntry("Review");
+		var foundArtist = Repository.GetByName(artistName);
+
+		if (foundArtist is null)
+		{
+			searchInput.ReadInput("Error",
+			                      $"Couldn't find \"{artistName}\". Press [Enter] to continue.");
+
+			return;
+		}
+
+		searchInput.ReadInput("Score",
+		                      $"What's your score to \"{foundArtist.Name}\"? [0-10]");
+
+		var parsedScore
+			= int.TryParse(searchInput.GetEntry("Score"), out var score);
+
+		if (!parsedScore)
+		{
+			searchInput.ReadInput("Error",
+			                      "Invalid score. Press [Enter] to continue.");
+
+			return;
+		}
+
+		if (score < 0 || score > 10)
+		{
+			searchInput.ReadInput("Error",
+			                      "Score must be between 0 and 10. Press [Enter] to continue.");
+
+			return;
+		}
+
+		foundArtist.AddReview(new Review(score));
+
+		var successfulTask = await Repository.Update(foundArtist);
+
+		if (!successfulTask)
+			searchInput.ReadInput("Error",
+			                      "An error occurred while adding the review. Press [Enter] to continue.");
+
+		searchInput.ReadInput("Success",
+		                      "Review added successfully. Press [Enter] to continue.");
+	}
 
 	public override Task Update() { throw new NotImplementedException(); }
 }
