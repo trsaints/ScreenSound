@@ -7,28 +7,28 @@ namespace ScreenSound.Views;
 
 public class PageView : View, IPageView
 {
-	public PageView(string title, IEnumerable<Entity> contents) : base(title)
+	public PageView(string title, IEnumerable<string> contents) : base(title)
 	{
 		_contents.AddRange(contents);
 	}
 
-	private readonly List<Entity> _contents = new();
+	private readonly List<string> _contents = new();
 	private          uint         CurrentPage    { get; set; }
 	private          string?      CurrentContent { get; set; }
 
 	public override void Display()
 	{
 		base.Display();
-		
+
 		var userDirection = Console.ReadKey();
-		
+
 		while (true)
 		{
 			if (userDirection.Key == ConsoleKey.Escape) break;
 
 			ChangePage(userDirection.Key);
 			BuildLayout();
-			
+
 			base.Display();
 
 			userDirection = Console.ReadKey();
@@ -37,20 +37,8 @@ public class PageView : View, IPageView
 
 	public override string BuildLayout()
 	{
-		var currentObject = _contents[(int)CurrentPage];
-		var currentProperties = currentObject.GetType()
-		                                     .GetProperties()
-		                                     .ToDictionary(
-			                                     p => p.Name,
-			                                     p => p.GetValue(currentObject)!
-				                                     .ToString() ?? "");
+		CurrentContent = _contents[(int)CurrentPage];
 
-		DetailsView objectDetails
-			= new("Details: " + currentObject.GetType().Name,
-			      currentProperties);
-
-		CurrentContent = objectDetails.BuildLayout();
-		
 		Layout.Clear();
 		Layout.AppendLine(GenerateHeader("View All Artists"));
 		Layout.AppendLine(CurrentContent);
