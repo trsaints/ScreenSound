@@ -8,7 +8,8 @@ namespace ScreenSound.Contexts;
 
 public class AlbumContext : Context<Album>
 {
-	public AlbumContext(IRepository<Album> repository, IRepository<Artist> artists) : base(repository)
+	public AlbumContext(IRepository<Album> repository,
+	                    IRepository<Artist> artists) : base(repository)
 	{
 		_artists = artists;
 	}
@@ -32,14 +33,10 @@ public class AlbumContext : Context<Album>
 			return;
 		}
 
-		Album newAlbum = new()
-		{
-			Name     = userInput.GetEntry("Name"),
-			ArtistId = albumArtist.Id
-		};
+		Album newAlbum = new(userInput.GetEntry("Name"), albumArtist.Id);
 
 		var successfulTask = await Repository.Add(newAlbum);
-		
+
 		if (successfulTask)
 		{
 			userInput.ReadInput("Success",

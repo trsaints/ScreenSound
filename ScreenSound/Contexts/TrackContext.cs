@@ -50,9 +50,8 @@ public class TrackContext : Context<Track>
 		}
 
 
-		Track newTrack = new()
+		Track newTrack = new(userInput.GetEntry("Name"))
 		{
-			Name      = userInput.GetEntry("Name"),
 			ArtistId  = trackArtist.Id,
 			AlbumId   = trackAlbum.Id,
 			Duration  = uint.Parse(userInput.GetEntry("Duration")),

@@ -3,9 +3,10 @@ namespace ScreenSound.Models;
 
 public abstract class Entity : IReviewable
 {
-	protected Entity()
+	protected Entity(string name)
 	{
 		Id = NextId;
+		Name = name;
 
 		_ = ulong.TryParse(_generator.NextInt64().ToString(), out NextId);
 	}
@@ -14,7 +15,8 @@ public abstract class Entity : IReviewable
 
 	private readonly Random _generator = new();
 
-	public ulong Id { get; }
+	public ulong  Id   { get; }
+	public string Name { get; }
 
 	public abstract double AverageScore { get; }
 

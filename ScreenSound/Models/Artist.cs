@@ -9,13 +9,10 @@ public class Artist : Entity
 {
 	private readonly List<Review> _reviews = new();
 	
-	public Artist(string name)
+	public Artist(string name): base(name)
 	{
-		Name = name;
 	}
-
-	public string Name { get; }
-
+	
 	public override double AverageScore
 	{
 		get

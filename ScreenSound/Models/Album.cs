@@ -7,18 +7,16 @@ namespace ScreenSound.Models;
 
 public class Album : Entity
 {
-	private readonly List<Review> _scores = new();
+	public Album(string name) : base(name) { }
 
-	public ulong   ArtistId { get; init; }
-	public string? Name     { get; init; }
-
-	public Album() { }
-
-	public Album(string? name, ulong artistId)
+	public Album(string name, ulong artistId) : base(name)
 	{
 		ArtistId = artistId;
-		Name     = name;
 	}
+
+	private readonly List<Review> _scores = new();
+
+	public ulong ArtistId { get; init; }
 
 	public override double AverageScore
 	{

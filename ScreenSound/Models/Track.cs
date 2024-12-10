@@ -6,28 +6,25 @@ namespace ScreenSound.Models;
 
 public class Track : Entity
 {
+	public Track(string name): base(name) { }
+
+	public Track(ulong artistId,
+	             ulong albumId,
+	             string name,
+	             uint duration,
+	             bool available): base(name)
+	{
+		ArtistId  = artistId;
+		AlbumId   = albumId;
+		Duration  = duration;
+		Available = available;
+	}
+
 	private readonly List<Review> _reviews = new();
 	public           ulong        AlbumId   { get; init; }
 	public           ulong        ArtistId  { get; init; }
 	public           bool         Available { get; init; }
 	public           uint         Duration  { get; init; }
-
-	public string? Name { get; init; }
-
-	public Track() { }
-
-	public Track(ulong artistId,
-	             ulong albumId,
-	             string? name,
-	             uint duration,
-	             bool available)
-	{
-		ArtistId  = artistId;
-		AlbumId   = albumId;
-		Name      = name;
-		Duration  = duration;
-		Available = available;
-	}
 
 	public override double AverageScore
 	{
