@@ -38,9 +38,9 @@ public class AlbumContext : Context<Album>
 			ArtistId = albumArtist.Id
 		};
 
-		var success = await Repository.Add(newAlbum);
-
-		if (success)
+		var successfulTask = await Repository.Add(newAlbum);
+		
+		if (successfulTask)
 		{
 			userInput.ReadInput("Success",
 			                    "Album registered successfully. Press [Enter] to continue");

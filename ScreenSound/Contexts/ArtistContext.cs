@@ -1,4 +1,7 @@
+using System.Text;
+using ScreenSound.Contexts.Interfaces;
 using ScreenSound.Models;
+using ScreenSound.Repositories;
 using ScreenSound.Repositories.Interfaces;
 using ScreenSound.Views;
 
@@ -6,12 +9,19 @@ using ScreenSound.Views;
 namespace ScreenSound.Contexts;
 
 
-public class ArtistContext : Context<Artist>
+public sealed class ArtistContext : Context<Artist>, IArtistContext
 {
-	public ArtistContext(IRepository<Artist> repository) :
+	public ArtistContext(IRepository<Artist> repository,
+	                     IRepository<Album> albums,
+	                     IRepository<Track> tracks) :
 		base(repository)
 	{
+		_albums = albums;
+		_tracks = tracks;
 	}
+
+	private readonly IRepository<Album> _albums;
+	private readonly IRepository<Track> _tracks;
 
 	public override async Task Register()
 	{
@@ -187,4 +197,55 @@ public class ArtistContext : Context<Artist>
 	}
 
 	public override Task Update() { throw new NotImplementedException(); }
+
+
+	public void ViewDiscography()
+	{
+		InputView searchInput = new("View Discography");
+		searchInput.BuildLayout();
+
+		searchInput.ReadInput("Search",
+		                      "Enter the name of the artist: ");
+
+		var artistName  = searchInput.GetEntry("Search");
+		var foundArtist = Repository.GetByName(artistName);
+
+		if (foundArtist is null)
+		{
+			searchInput.ReadInput("Error",
+			                      $"Couldn't find \"{artistName}\". Press [Enter] to continue.");
+
+			return;
+		}
+
+		var artistAlbums = _albums.GetAll()
+		                          .Where(album =>
+			                                 album.ArtistId ==
+			                                 foundArtist.Id)
+		                          .ToList();
+
+		if (artistAlbums.Count is 0)
+		{
+			searchInput.ReadInput("Error",
+			                      "No albums found for this artist. Press [Enter] to continue.");
+
+			return;
+		}
+
+		PageView artistDiscography = new("Discography", artistAlbums);
+		artistDiscography.BuildLayout();
+		artistDiscography.Display();
+	}
+
+	protected override void InitMenuActions()
+	{
+		base.InitMenuActions();
+
+		MenuActions.Add(7, async () =>
+		{
+			ViewDiscography();
+
+			await Task.CompletedTask;
+		});
+	}
 }
