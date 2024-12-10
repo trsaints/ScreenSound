@@ -10,7 +10,7 @@ public class Album : Entity
 	private readonly List<Review> _scores = new();
 
 	public ulong   ArtistId { get; init; }
-	public  string? Name     { get; init; }
+	public string? Name     { get; init; }
 
 	public Album() { }
 
@@ -30,22 +30,12 @@ public class Album : Entity
 		}
 	}
 
-	public List<ulong> TracksIds { get; } = new();
-
 	public override void AddReview(Review review) { _scores.Add(review); }
 
-	public uint GetAlbumDuration(TrackRepository repository)
+	public long GetAlbumDuration(TrackRepository tracks)
 	{
-		uint duration = 0;
-
-		foreach (var track in TracksIds)
-		{
-			var trackData = repository.GetById(track);
-
-			if (trackData is null) continue;
-
-			duration += trackData.Duration;
-		}
+		var albumTracks = tracks.GetAll().Where(t => t.AlbumId == Id);
+		var duration    = albumTracks.Sum(t => t.Duration);
 
 		return duration;
 	}
