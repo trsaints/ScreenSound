@@ -37,17 +37,6 @@ public class Track : Entity
 		}
 	}
 
-	public void DisplayDetails()
-	{
-		var trackProperties = GetType().GetProperties();
-		var trackInfo = trackProperties.ToDictionary(info => info.Name,
-			info => info.GetValue(this).ToString()!);
-
-		DetailsView detailsView = new("Track Details", trackInfo);
-		detailsView.BuildLayout();
-		detailsView.Display();
-	}
-
 	public override void AddReview(Review review)
 	{
 		_reviews.Add(review);
