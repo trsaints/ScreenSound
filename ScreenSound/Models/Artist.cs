@@ -8,9 +8,7 @@ namespace ScreenSound.Models;
 public class Artist : Entity
 {
 	private readonly List<Review> _reviews = new();
-
-	public readonly List<ulong> AlbumsIds = new();
-
+	
 	public Artist(string name)
 	{
 		Name = name;
