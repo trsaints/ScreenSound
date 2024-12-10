@@ -10,7 +10,7 @@ namespace ScreenSound.Contexts;
 public abstract class Context<T> : IContext<T> where T : Entity
 {
 	private readonly MenuView                     _menu;
-	private readonly Dictionary<uint, Func<Task>> _menuActions = new();
+	protected readonly Dictionary<uint, Func<Task>> MenuActions = new();
 	private readonly string                       _title = $"{typeof(T).Name}";
 
 	protected readonly IRepository<T> Repository;
@@ -44,7 +44,7 @@ public abstract class Context<T> : IContext<T> where T : Entity
 			if (_menu.ChosenOption == -1)
 				return Task.CompletedTask;
 
-			await _menuActions[(uint)_menu.ChosenOption]();
+			await MenuActions[(uint)_menu.ChosenOption]();
 			return Task.CompletedTask;
 		});
 	}
@@ -56,21 +56,21 @@ public abstract class Context<T> : IContext<T> where T : Entity
 	public abstract Task AddReview();
 	public abstract Task Update();
 
-	private void InitMenuActions()
+	protected virtual void InitMenuActions()
 	{
-		_menuActions.Add(1, async () => await Register());
-		_menuActions.Add(2, async () =>
+		MenuActions.Add(1, async () => await Register());
+		MenuActions.Add(2, async () =>
 		{
 			ViewAll();
 			await Task.CompletedTask;
 		});
-		_menuActions.Add(3, async () =>
+		MenuActions.Add(3, async () =>
 		{
 			ViewDetails();
 			await Task.CompletedTask;
 		});
-		_menuActions.Add(4, async () => await Remove());
-		_menuActions.Add(5, async () => await AddReview());
-		_menuActions.Add(6, async () => await Update());
+		MenuActions.Add(4, async () => await Remove());
+		MenuActions.Add(5, async () => await AddReview());
+		MenuActions.Add(6, async () => await Update());
 	}
 }
