@@ -1,3 +1,4 @@
+using System.Text;
 using ScreenSound.Views.Interfaces;
 
 
@@ -15,23 +16,46 @@ public sealed class InputView : View, IInputView
 	}
 
 	public void ReadInput(string key, string? messagePrompt = null)
-	{
-		if (messagePrompt is not null)
-		{
-			Layout.Clear();
-			_messagePrompt = messagePrompt;
-			BuildLayout();
-		}
+{
+    if (messagePrompt is not null)
+    {
+        Layout.Clear();
+        _messagePrompt = messagePrompt;
+        BuildLayout();
+    }
 
-		Console.Clear();
-		Display();
+    Console.Clear();
+    Display();
 
-		var userInput = Console.ReadLine();
+    var            userInput = new StringBuilder();
+    ConsoleKeyInfo keyInfo;
 
-		if (userInput is null) return;
+    while (true)
+    {
+        keyInfo = Console.ReadKey(intercept: true);
 
-		UserEntries.Add(key, userInput);
-	}
+        if (keyInfo.Key == ConsoleKey.Enter)
+        {
+            Console.WriteLine();
+            break;
+        }
+        
+        if (keyInfo.Key == ConsoleKey.Backspace)
+        {
+	        if (userInput.Length <= 0) continue;
+
+	        userInput.Remove(userInput.Length - 1, 1);
+	        Console.Write("\b \b");
+        }
+        else
+        {
+            userInput.Append(keyInfo.KeyChar);
+            Console.Write(keyInfo.KeyChar);
+        }
+    }
+
+    UserEntries.Add(key, userInput.ToString());
+}
 
 	public string GetEntry(string key)
 	{
