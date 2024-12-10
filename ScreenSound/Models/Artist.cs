@@ -32,24 +32,4 @@ public class Artist : Entity
 	{
 		_reviews.Add(review);
 	}
-
-	public void DisplayDiscography(AlbumRepository albums,
-	                               TrackRepository tracks)
-	{
-		Console.WriteLine($"{Name}'s Discography");
-
-		StringBuilder discography = new();
-
-		foreach (var album in AlbumsIds)
-		{
-			var albumData = albums.GetById(album);
-
-			if (albumData is null) continue;
-
-			discography.AppendLine(
-				$"Album: {albumData.Name} \t-\t({albumData.GetAlbumDuration(tracks)})");
-		}
-
-		Console.WriteLine(discography.ToString());
-	}
 }

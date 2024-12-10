@@ -7,16 +7,18 @@ namespace ScreenSound.Models;
 public class Track : Entity
 {
 	private readonly List<Review> _reviews = new();
-	public readonly  ulong        AlbumId;
-	public readonly  ulong        ArtistId;
-	public readonly  bool         Available;
-	public readonly  uint         Duration;
+	public           ulong        AlbumId   { get; init; }
+	public           ulong        ArtistId  { get; init; }
+	public           bool         Available { get; init; }
+	public           uint         Duration  { get; init; }
 
-	public readonly string Name;
+	public string? Name { get; init; }
+
+	public Track() { }
 
 	public Track(ulong artistId,
 	             ulong albumId,
-	             string name,
+	             string? name,
 	             uint duration,
 	             bool available)
 	{
@@ -37,8 +39,5 @@ public class Track : Entity
 		}
 	}
 
-	public override void AddReview(Review review)
-	{
-		_reviews.Add(review);
-	}
+	public override void AddReview(Review review) { _reviews.Add(review); }
 }

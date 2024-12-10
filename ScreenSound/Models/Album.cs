@@ -9,10 +9,12 @@ public class Album : Entity
 {
 	private readonly List<Review> _scores = new();
 
-	private readonly ulong  ArtistId;
-	public readonly  string Name;
+	public ulong   ArtistId { get; init; }
+	public  string? Name     { get; init; }
 
-	public Album(string name, ulong artistId)
+	public Album() { }
+
+	public Album(string? name, ulong artistId)
 	{
 		ArtistId = artistId;
 		Name     = name;
@@ -30,10 +32,7 @@ public class Album : Entity
 
 	public List<ulong> TracksIds { get; } = new();
 
-	public override void AddReview(Review review)
-	{
-		_scores.Add(review);
-	}
+	public override void AddReview(Review review) { _scores.Add(review); }
 
 	public void DisplayAlbumTracks(ArtistRepository artists,
 	                               TrackRepository tracks)
