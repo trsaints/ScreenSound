@@ -11,51 +11,49 @@ public sealed class InputView : View, IInputView
 
 	private string? _messagePrompt;
 
-	public InputView(string title) : base(title)
-	{
-	}
+	public InputView(string title) : base(title) { }
 
 	public void ReadInput(string key, string? messagePrompt = null)
-{
-    if (messagePrompt is not null)
-    {
-        Layout.Clear();
-        _messagePrompt = messagePrompt;
-        BuildLayout();
-    }
+	{
+		if (messagePrompt is not null)
+		{
+			Layout.Clear();
+			_messagePrompt = messagePrompt;
+			BuildLayout();
+		}
 
-    Console.Clear();
-    Display();
+		Console.Clear();
+		Display();
 
-    var            userInput = new StringBuilder();
-    ConsoleKeyInfo keyInfo;
+		var            userInput = new StringBuilder();
+		ConsoleKeyInfo keyInfo;
 
-    while (true)
-    {
-        keyInfo = Console.ReadKey(intercept: true);
+		while (true)
+		{
+			keyInfo = Console.ReadKey(intercept: true);
 
-        if (keyInfo.Key == ConsoleKey.Enter)
-        {
-            Console.WriteLine();
-            break;
-        }
-        
-        if (keyInfo.Key == ConsoleKey.Backspace)
-        {
-	        if (userInput.Length <= 0) continue;
+			if (keyInfo.Key == ConsoleKey.Enter)
+			{
+				Console.WriteLine();
+				break;
+			}
 
-	        userInput.Remove(userInput.Length - 1, 1);
-	        Console.Write("\b \b");
-        }
-        else
-        {
-            userInput.Append(keyInfo.KeyChar);
-            Console.Write(keyInfo.KeyChar);
-        }
-    }
+			if (keyInfo.Key == ConsoleKey.Backspace)
+			{
+				if (userInput.Length <= 0) continue;
 
-    UserEntries.Add(key, userInput.ToString());
-}
+				userInput.Remove(userInput.Length - 1, 1);
+				Console.Write("\b \b");
+			}
+			else
+			{
+				userInput.Append(keyInfo.KeyChar);
+				Console.Write(keyInfo.KeyChar);
+			}
+		}
+
+		UserEntries.Add(key, userInput.ToString());
+	}
 
 	public string GetEntry(string key)
 	{
@@ -69,7 +67,7 @@ public sealed class InputView : View, IInputView
 		Layout.AppendLine(Title);
 		Layout.AppendLine();
 		Layout.Append(_messagePrompt);
-		
+
 		return Layout.ToString();
 	}
 }
