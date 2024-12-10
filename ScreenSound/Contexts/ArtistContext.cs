@@ -56,7 +56,19 @@ public sealed class ArtistContext : Context<Artist>, IArtistContext
 			return;
 		}
 
-		PageView artistPages = new("Artists", artists);
+		List<string> artistPageContents = new(artists.Select(a =>
+		{
+			DetailsView details = new("Artist Details", a.GetType()
+				                          .GetProperties()
+				                          .ToDictionary(
+					                          p => p.Name,
+					                          p => p.GetValue(a)
+					                                .ToString() ?? "N/A"));
+
+			return details.BuildLayout();
+		}));
+
+		PageView artistPages = new("Artists", artistPageContents);
 		artistPages.BuildLayout();
 		artistPages.Display();
 	}
@@ -201,7 +213,7 @@ public sealed class ArtistContext : Context<Artist>, IArtistContext
 
 	public void ViewDiscography()
 	{
-		InputView searchInput = new("View Discography");
+		/*InputView searchInput = new("View Discography");
 		searchInput.BuildLayout();
 
 		searchInput.ReadInput("Search",
@@ -234,7 +246,7 @@ public sealed class ArtistContext : Context<Artist>, IArtistContext
 
 		PageView artistDiscography = new("Discography", artistAlbums);
 		artistDiscography.BuildLayout();
-		artistDiscography.Display();
+		artistDiscography.Display();*/
 	}
 
 	protected override void InitMenuActions()
