@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json.Serialization;
 using ScreenSound.Repositories;
 
 
@@ -9,6 +10,7 @@ public class Album : Entity
 {
 	public Album(string name) : base(name) { }
 
+	[JsonConstructor]
 	public Album(string name, ulong artistId) : base(name)
 	{
 		ArtistId = artistId;
