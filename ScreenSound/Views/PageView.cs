@@ -24,7 +24,7 @@ public class PageView : View, IPageView
 
 		while (true)
 		{
-			if (userDirection.Key == ConsoleKey.Escape) break;
+			if (userDirection.Key == ConsoleKey.Q) break;
 
 			ChangePage(userDirection.Key);
 			BuildLayout();
@@ -45,7 +45,7 @@ public class PageView : View, IPageView
 		Layout.AppendLine();
 		Layout.AppendLine(GenerateLineSeparator('-'));
 		Layout.AppendLine($"Page: {CurrentPage + 1}/{_contents.Count}");
-		Layout.AppendLine("[Left/Right] to navigate \t\t\t [Esc] to exit");
+		Layout.AppendLine("Press: [Left/Right] to navigate through \t\t\t [Q] to quit page view.");
 
 		return Layout.ToString();
 	}
