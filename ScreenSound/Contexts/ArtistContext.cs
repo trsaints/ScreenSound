@@ -12,7 +12,7 @@ namespace ScreenSound.Contexts;
 public sealed class ArtistContext : Context<Artist>, IArtistContext
 {
 	public ArtistContext(IRepository<Artist> repository,
-	                     IRepository<Album> albums,
+	                     IAlbumRepository albums,
 	                     IRepository<Track> tracks) :
 		base(repository)
 	{
@@ -20,7 +20,7 @@ public sealed class ArtistContext : Context<Artist>, IArtistContext
 		_tracks = tracks;
 	}
 
-	private readonly IRepository<Album> _albums;
+	private readonly IAlbumRepository   _albums;
 	private readonly IRepository<Track> _tracks;
 
 	public override async Task Register()
@@ -213,7 +213,7 @@ public sealed class ArtistContext : Context<Artist>, IArtistContext
 
 	public void ViewDiscography()
 	{
-		/*InputView searchInput = new("View Discography");
+		InputView searchInput = new("View Discography");
 		searchInput.BuildLayout();
 
 		searchInput.ReadInput("Search",
@@ -230,11 +230,7 @@ public sealed class ArtistContext : Context<Artist>, IArtistContext
 			return;
 		}
 
-		var artistAlbums = _albums.GetAll()
-		                          .Where(album =>
-			                                 album.ArtistId ==
-			                                 foundArtist.Id)
-		                          .ToList();
+		var artistAlbums = _albums.GetByArtist(foundArtist.Id);
 
 		if (artistAlbums.Count is 0)
 		{
@@ -244,9 +240,21 @@ public sealed class ArtistContext : Context<Artist>, IArtistContext
 			return;
 		}
 
-		PageView artistDiscography = new("Discography", artistAlbums);
+		List<string> albumPageContents = new(artistAlbums.Select(a =>
+		{
+			DetailsView details = new("Album Details", a.GetType()
+				                          .GetProperties()
+				                          .ToDictionary(
+					                          p => p.Name,
+					                          p => p.GetValue(a)
+					                                ?.ToString() ?? "N/A"));
+
+			return details.BuildLayout();
+		}));
+
+		PageView artistDiscography = new("Discography", albumPageContents);
 		artistDiscography.BuildLayout();
-		artistDiscography.Display();*/
+		artistDiscography.Display();
 	}
 
 	protected override void InitMenuActions()
